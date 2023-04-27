@@ -58,7 +58,7 @@ struct HomeView: View {
                         .foregroundColor(Color(white:0.4))
                     ForEach(tasksList.tasks) { task in
                         
-                        if selectedCategories.contains(task.categories)||selectedCategories.contains("all") {
+                        if selectedCategories.contains(task.category) || selectedCategories.contains("all") {
                             withAnimation {
                                 TaskCell(task: task, isShowingHour: $isShowingHour) {
                                     selectedTaskToDelete = task

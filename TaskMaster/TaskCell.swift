@@ -53,17 +53,11 @@ struct TaskCell: View {
                         Button {
                             //
                         } label: {
-                            ForEach(task.categories, id: \.self){ category in
-                                Image(category)
+                            Image(task.category)
                                     .resizable()
                                     .frame(width: 40,height: 40)
-                            }
-                            
                         }
-
-                        
                     }
-                
             }
             
             if isDetailedMode && isFinishedTask{

@@ -25,7 +25,7 @@ struct TaskCreationScreen: View {
                     .font(.system(size: 32,weight:.bold))
                     .padding(.top,32)
                     .foregroundColor(Color.black)
-                Text("Catégories : \(selectedCategories.joined(separator: ", "))")
+                Text("Catégorie : \(selectedCategory)")
                     .font(.system(size: 20,weight: .light))
                     .foregroundColor(Color(white:0.4))
                 
@@ -100,7 +100,7 @@ struct TaskCreationScreen: View {
             .frame(maxWidth: .infinity,alignment: .leading)
             Spacer()
             AccentButton(name: "Ajouter", color: .black, action: {
-                let newTask = Task(name: taskName, date: taskDate, categories: selectedCategories)
+                let newTask = Task(name: taskName, date: taskDate, category: selectedCategory)
                 onTaskCreated(newTask)
                 presentationMode.wrappedValue.dismiss()
             })

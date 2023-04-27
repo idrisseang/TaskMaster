@@ -8,9 +8,9 @@
 import Foundation
 
 let previewTasks = [
-    Task(name: "Ranger ma chambre", date: Date(), categories: [Category.maison.rawValue]),
-    Task(name: "Appeler 3 clients", date: Date(), categories: [Category.business.rawValue]),
-    Task(name: "Finir de classer les dossiers", date: Date(), categories: [Category.travail.rawValue]),
-    Task(name: "Finir le Guide Ultime du SwiftUI", date: Date(), categories: [Category.learning.rawValue]),
-    Task(name: "Faire 10 min de running", date: Date(), categories: [Category.workout.rawValue])
+    Task(name: "Ranger ma chambre", date: Date(), category: Category.maison.rawValue),
+    Task(name: "Appeler 3 clients", date: Date(), category: Category.business.rawValue),
+    Task(name: "Finir de classer les dossiers", date: Date(), category: Category.travail.rawValue),
+    Task(name: "Finir le Guide Ultime du SwiftUI", date: Date(), category: Category.learning.rawValue),
+    Task(name: "Faire 10 min de running", date: Date(), category: Category.workout.rawValue)
 ]

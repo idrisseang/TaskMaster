@@ -11,7 +11,7 @@ class Task : Identifiable, Codable{
    var id = UUID()
     let name : String
     var date : Date
-    let categories: [String]
+    let category : String
     
     
     func formatDate(date:Date,isIncludingHour : Bool) -> String{
@@ -26,24 +26,24 @@ class Task : Identifiable, Codable{
         let dateFormatted = dateFormatter.string(from: date)
         return dateFormatted
     }
-    init(name : String , date : Date, categories : [String]) {
+    init(name : String , date : Date, category : String) {
         self.name = name
         self.date = date
-        self.categories = categories
+        self.category = category
     }
     
     enum CodingKeys : CodingKey{
         case id
         case name
         case date
-        case categories
+        case category
     }
     required init (from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(UUID.self, forKey: .id)
         self.name = try container.decode(String.self, forKey: .name)
         self.date = try container.decode(Date.self, forKey: .date)
-        self.categories = try container.decode([String].self, forKey: .categories)
+        self.category = try container.decode(String.self, forKey: .category)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -51,6 +51,6 @@ class Task : Identifiable, Codable{
         try container.encode(id, forKey: .id)
         try container.encode(name, forKey: .name)
         try container.encode(date, forKey: .date)
-        try container.encode(categories, forKey: .categories)
+        try container.encode(category, forKey: .category)
     }
 }
