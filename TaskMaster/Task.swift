@@ -8,36 +8,36 @@
 import Foundation
 
 class Task : Identifiable, Codable{
-   var id = UUID()
+    var id = UUID()
     let name : String
     var date : Date
     let category : String
     
-    
-    func formatDate(date:Date,isIncludingHour : Bool) -> String{
+    func formatDate(date:Date,isIncludingHour : Bool) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "fr_FR")
-        if isIncludingHour{
+        if isIncludingHour {
             dateFormatter.dateFormat = "dd/MM/yyyy 'à' HH:mm"
-        }else{
+        } else {
             dateFormatter.dateFormat = "dd/MM/yyyy "
         }
-        
         let dateFormatted = dateFormatter.string(from: date)
         return dateFormatted
     }
+    
     init(name : String , date : Date, category : String) {
         self.name = name
         self.date = date
         self.category = category
     }
     
-    enum CodingKeys : CodingKey{
+    enum CodingKeys : CodingKey {
         case id
         case name
         case date
         case category
     }
+    
     required init (from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(UUID.self, forKey: .id)

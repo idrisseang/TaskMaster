@@ -18,6 +18,7 @@ struct TaskCreationScreen: View {
     @State private var hide : Bool = false
     @State private var isShowingHour : Bool = true
     var onTaskCreated : (Task) -> Void
+    
     var body: some View {
         VStack(spacing : 24){
             VStack(spacing: 16){
@@ -28,10 +29,9 @@ struct TaskCreationScreen: View {
                 Text("Catégorie : \(selectedCategory)")
                     .font(.system(size: 20,weight: .light))
                     .foregroundColor(Color(white:0.4))
-                
             }
             Spacer()
-            VStack(alignment: .leading){
+            VStack(alignment: .leading) {
                 Text("Nom de la tâche")
                     .font(.title2)
                     .bold()
@@ -43,29 +43,24 @@ struct TaskCreationScreen: View {
                     .padding(.horizontal,12)
                     .background(Color.white)
                     .cornerRadius(.infinity)
-                    
-                    
             }
             Spacer()
-           
-            VStack(alignment: .leading){
+            VStack(alignment: .leading) {
                 Text("Categorie")
                     .font(.title2)
                     .bold()
                     .foregroundColor(Color.black)
                 CategorySelector(selectedCategories: $selectedCategories, selectedCategory: $selectedCategory, isTaskCreationScreen: .constant(true))
                     .padding(-7)
-                
             }
             Spacer()
-            
-            VStack(alignment : .leading){
+            VStack(alignment : .leading) {
                 Text("Date d'échéance")
                     .font(.title2)
                     .bold()
                     .foregroundColor(Color.black)
                 HStack{
-                    if isInSelectionMode && !hide{
+                    if isInSelectionMode && !hide {
                         DatePickerButton(title: "Aujourd'hui", timeVariation: .day, value: 0, iconName: "sun.max", currentDate: $taskDate) {
                             withAnimation {
                                 hide = true
@@ -84,16 +79,14 @@ struct TaskCreationScreen: View {
                                 isShowingHour = true
                             }
                         }
-                        
                         ChooseDateHourButton(date: $taskDate, hide: $hide)
-                        
-                    }else{
+                    } else {
                         DateChoosen(date: $taskDate, isShowingHour: isShowingHour) {
-                                withAnimation {
-                                    hide = false
-                                    taskDate = Date()
-                                }
+                            withAnimation {
+                                hide = false
+                                taskDate = Date()
                             }
+                        }
                     }
                 }
             }
@@ -108,7 +101,6 @@ struct TaskCreationScreen: View {
         .padding()
         .background(Color("lightBlue"))
         .preferredColorScheme(.dark)
-        
     }
 }
 
@@ -117,6 +109,5 @@ struct TaskCreationScreen_Previews: PreviewProvider {
         TaskCreationScreen {_ in
             return
         }
-        
     }
 }

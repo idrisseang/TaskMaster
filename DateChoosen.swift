@@ -9,26 +9,25 @@ import SwiftUI
 
 struct DateChoosen: View {
     
-   @Binding var date : Date
+    @Binding var date : Date
     let isShowingHour : Bool
     let onClick : () -> Void
     
     func formatDate(date:Date,isIncludingHour : Bool) -> String{
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "fr_FR")
-        if isIncludingHour{
+        if isIncludingHour {
             dateFormatter.dateFormat = "EEE d MMMM YYYY 'à' HH:mm"
-        }else{
+        } else {
             dateFormatter.dateFormat = "EEE d MMMM YYYY"
         }
-        
         let dateFormatted = dateFormatter.string(from: date)
         return dateFormatted
     }
+    
     var body: some View {
-        HStack(spacing:4){
+        HStack(spacing:4) {
             Text(formatDate(date:date,isIncludingHour: isShowingHour))
-                
                 .font(.footnote)
                 .bold()
                 .foregroundColor(.white)
@@ -44,21 +43,16 @@ struct DateChoosen: View {
                     .font(.footnote)
                     .foregroundColor(Color.white)
             }
-
         }
         .padding(4)
         .background(Color("AccentBlue"))
         .cornerRadius(4)
-            
     }
 }
 
 struct DateChoosen_Previews: PreviewProvider {
-    
     static var previews: some View {
-        DateChoosen(date: .constant(Date()), isShowingHour: true,onClick: {
-            //
-        })
+        DateChoosen(date: .constant(Date()), isShowingHour: true,onClick: {})
             .previewLayout(.sizeThatFits)
             .padding()
             .background(.white)

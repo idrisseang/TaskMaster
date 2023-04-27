@@ -12,8 +12,9 @@ struct CategorySelector: View {
     @Binding var selectedCategories : [String]
     @Binding var selectedCategory : String
     @Binding var isTaskCreationScreen : Bool
+    
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false){
+        ScrollView(.horizontal, showsIndicators: false) {
             HStack{
                 ForEach(categoriesImages, id: \.self) { category in
                     Button{

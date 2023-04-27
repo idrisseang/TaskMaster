@@ -26,10 +26,9 @@ struct HomeView: View {
                     Text("Cliquez sur une catégorie pour voir les tâches👇")
                         .foregroundColor(Color(white:0.4))
                     CategorySelector(selectedCategories: $selectedCategories,selectedCategory: $selectedCategory, isTaskCreationScreen: .constant(false))
-                    
                 }
                 Spacer()
-                VStack(alignment: .leading, spacing: 20){
+                VStack(alignment: .leading, spacing: 20) {
                     HStack{
                         Text("Liste de tâches")
                             .font(.system(size: 32,weight: .light))
@@ -39,25 +38,20 @@ struct HomeView: View {
                             .foregroundColor(.white)
                             .frame(width: 50, height: 50)
                             .padding(.trailing)
-                            .overlay(){
+                            .overlay {
                                 Button {
                                     isShowingNewTaskScreen = true
                                 } label: {
                                     Image(systemName: "plus")
                                         .font(.system(size: 20,weight: .bold))
                                         .foregroundColor(Color("AccentBlue"))
-                                    
                                 }
                                 .padding(.trailing)
-                                
                             }
-                        
                     }
-                    
                     Text("Vous avez actuellement \(Text("\(tasksList.tasks.count)").bold() .foregroundColor(.black)) tâches ")
                         .foregroundColor(Color(white:0.4))
-                    ForEach(tasksList.tasks) { task in
-                        
+                    ForEach (tasksList.tasks) { task in
                         if selectedCategories.contains(task.category) || selectedCategories.contains("all") {
                             withAnimation {
                                 TaskCell(task: task, isShowingHour: $isShowingHour) {
@@ -67,7 +61,6 @@ struct HomeView: View {
                                             taskToDelete.id == selectedTaskToDelete!.id
                                         }
                                     }
-                                    
                                     selectedTaskToDelete = nil
                                 }
                             }
@@ -78,7 +71,7 @@ struct HomeView: View {
             .padding()
         }
         .onChange(of: scenePhase, perform: { phase in
-            if phase == .inactive{
+            if phase == .inactive {
                 TaskList.save(tasks: tasksList.tasks) { result in
                     if case.failure(let error) = result {
                         fatalError(error.localizedDescription)
@@ -86,7 +79,6 @@ struct HomeView: View {
                 }
             }
         })
-        
         .background(Color("lightBlue"))
         .sheet(isPresented: $isShowingNewTaskScreen) {
             TaskCreationScreen{ newTask in
@@ -95,16 +87,13 @@ struct HomeView: View {
         }
         .onAppear{
             TaskList.load { result in
-                switch result{
+                switch result {
                 case .failure(let error):
                     fatalError(error.localizedDescription)
                 case .success(let tasks):
                     tasksList.tasks = tasks
                 }
             }
-            
-            
-            
         }
     }
 }

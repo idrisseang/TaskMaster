@@ -13,29 +13,29 @@ class TaskList : ObservableObject{
     init(tasks: [Task]) {
         self.tasks = tasks
     }
-    static func save(tasks : [Task], completion : @escaping (Result<Int,Error>) -> Void){
+    
+    static func save(tasks : [Task], completion : @escaping (Result<Int,Error>) -> Void) {
         DispatchQueue.global(qos: .background).async {
-            do{
+            do {
                 let data = try JSONEncoder().encode(tasks)
                 let outfile = try fileURL()
                 try data.write(to: outfile)
                 DispatchQueue.main.async {
                     completion(.success(tasks.count))
                 }
-            }catch{
+            } catch{
                 DispatchQueue.main.async {
                     completion(.failure(error))
                 }
             }
         }
-        
     }
     
     static func load(completion : @escaping (Result<[Task],Error>) -> Void){
         DispatchQueue.global(qos: .background).async {
-            do{
+            do {
                 let fileURL = try fileURL()
-                guard let file = try? FileHandle(forReadingFrom: fileURL) else{
+                guard let file = try? FileHandle(forReadingFrom: fileURL) else {
                     DispatchQueue.main.async {
                         completion(.success([]))
                     }
@@ -45,7 +45,7 @@ class TaskList : ObservableObject{
                 DispatchQueue.main.async {
                     completion(.success(tasks))
                 }
-            }catch{
+            } catch {
                 DispatchQueue.main.async {
                     completion(.failure(error))
                 }
@@ -53,7 +53,7 @@ class TaskList : ObservableObject{
         }
     }
     
-    private static func fileURL() throws -> URL{
+    private static func fileURL() throws -> URL {
         let path = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         let url = path.appendingPathComponent("tasks.data")
         return url 
