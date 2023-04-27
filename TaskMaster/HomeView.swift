@@ -12,6 +12,7 @@ struct HomeView: View {
     @StateObject private var tasksList = TaskList(tasks: [])
     @State private var isShowingNewTaskScreen = false
     @State private var selectedCategories : [String] = ["all"]
+    @State private var selectedCategory : String = "maison"
     @State private var selectedTaskToDelete : Task?=nil
     @Binding var isShowingHour : Bool
     
@@ -24,7 +25,7 @@ struct HomeView: View {
                         .foregroundColor(.black)
                     Text("Cliquez sur une catégorie pour voir les tâches👇")
                         .foregroundColor(Color(white:0.4))
-                    CategorySelector(selectedCategories: $selectedCategories)
+                    CategorySelector(selectedCategories: $selectedCategories,selectedCategory: $selectedCategory, isTaskCreationScreen: .constant(false))
                     
                 }
                 Spacer()

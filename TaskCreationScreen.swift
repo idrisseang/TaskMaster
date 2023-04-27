@@ -13,6 +13,7 @@ struct TaskCreationScreen: View {
     @State private var taskName = ""
     @State private var taskDate : Date = Date()
     @State private var selectedCategories : [String] = []
+    @State private var selectedCategory : String = ""
     @State private var isInSelectionMode : Bool = true
     @State private var hide : Bool = false
     @State private var isShowingHour : Bool = true
@@ -52,7 +53,7 @@ struct TaskCreationScreen: View {
                     .font(.title2)
                     .bold()
                     .foregroundColor(Color.black)
-                CategorySelector(selectedCategories: $selectedCategories)
+                CategorySelector(selectedCategories: $selectedCategories, selectedCategory: $selectedCategory, isTaskCreationScreen: .constant(true))
                     .padding(-7)
                 
             }
