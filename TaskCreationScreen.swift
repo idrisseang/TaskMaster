@@ -11,7 +11,8 @@ struct TaskCreationScreen: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
     @State private var taskName = ""
-    @State private var taskDate : Date = Date()
+    @State private var taskDate : Date?
+    @State private var currentDate = Date()
     @State private var selectedCategories : [String] = []
     @State private var selectedCategory : String = ""
     @State private var isInSelectionMode : Bool = true
@@ -60,20 +61,20 @@ struct TaskCreationScreen: View {
                     .bold()
                     .foregroundColor(Color.black)
                 HStack{
-                    if isInSelectionMode && !hide {
-                        DatePickerButton(title: "Aujourd'hui", timeVariation: .day, value: 0, iconName: "sun.max", currentDate: $taskDate) {
+                    if isInSelectionMode && !hide{
+                        DatePickerButton(title: "Aujourd'hui", timeVariation: .day, value: 0, iconName: "sun.max", currentDate: $currentDate) {
                             withAnimation {
                                 hide = true
                                 isShowingHour = false
                             }
                         }
-                        DatePickerButton(title: "Demain", timeVariation: .day, value: 1, iconName: "sunrise", currentDate: $taskDate) {
+                        DatePickerButton(title: "Demain", timeVariation: .day, value: 1, iconName: "sunrise", currentDate: $currentDate) {
                             withAnimation {
                                 hide = true
                                 isShowingHour = false
                             }
                         }
-                        DatePickerButton(title: "Dans 1h", timeVariation: .hour, value: 1, iconName: "hourglass", currentDate: $taskDate) {
+                        DatePickerButton(title: "Dans 1h", timeVariation: .hour, value: 1, iconName: "hourglass", currentDate: $currentDate) {
                             withAnimation {
                                 hide = true
                                 isShowingHour = true
@@ -81,28 +82,30 @@ struct TaskCreationScreen: View {
                         }
                         ChooseDateHourButton(date: $taskDate, hide: $hide)
                     } else {
-                        DateChoosen(date: $taskDate, isShowingHour: isShowingHour){
+                        DateChoosen(date: $taskDate, isShowingHour: isShowingHour) {
                             withAnimation {
                                 hide = false
-                                taskDate = Date()
                             }
+                            currentDate = Date()
                         }
                     }
                 }
             }
-            .frame(maxWidth: .infinity,alignment: .leading)
-            Spacer()
-            AccentButton(name: "Ajouter", color: .black, action: {
-                let newTask = Task(name: taskName, date: taskDate, category: selectedCategory)
-                onTaskCreated(newTask)
-                presentationMode.wrappedValue.dismiss()
-            })
         }
         .padding()
         .background(Color("lightBlue"))
         .preferredColorScheme(.dark)
+        .frame(maxWidth: .infinity,alignment: .leading)
+        Spacer()
+        AccentButton(name: "Ajouter", color: .black, action: {
+            let newTask = Task(name: taskName, date: taskDate, categories: selectedCategories)
+            onTaskCreated(newTask)
+            presentationMode.wrappedValue.dismiss()
+        })
     }
+    
 }
+
 
 struct TaskCreationScreen_Previews: PreviewProvider {
     static var previews: some View {

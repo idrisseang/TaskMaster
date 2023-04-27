@@ -36,7 +36,7 @@ struct TaskCell: View {
                             .foregroundColor(Color(white:0.4))
                             .strikethrough(true,pattern: .solid,color:.black)
                     }
-                    Text("\(formatDate(date: task.date, isIncludingHour: isShowingHour))")
+                    Text("\(formatDate(date: task.date ?? Date(), isIncludingHour: isShowingHour))")
                         .font(.system(size: 16,weight: .light))
                         .foregroundColor(Color(white:0.4))
                 }
