@@ -21,7 +21,6 @@ struct DatePickerButton: View {
             let datePicked = calendar.date(byAdding: timeVariation, value: value,to: currentDate ?? Date())
             currentDate = datePicked!
             onClick()
-            
         } label: {
             VStack{
                 Image(systemName: iconName)
@@ -35,10 +34,6 @@ struct DatePickerButton: View {
             .background(Color("AccentBlue"))
             .cornerRadius(8)
         }
-        .foregroundColor(.white)
-        .padding(4)
-        .background(Color("AccentBlue"))
-        .cornerRadius(8)
     }
 }
 

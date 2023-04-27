@@ -13,7 +13,7 @@ class TaskList : ObservableObject{
     init(tasks: [Task]) {
         self.tasks = tasks
     }
-
+    
     static func save(tasks : [Task], completion : @escaping (Result<Int,Error>) -> Void) {
         DispatchQueue.global(qos: .background).async {
             do {
@@ -31,7 +31,7 @@ class TaskList : ObservableObject{
         }
     }
     
-    static func load(completion : @escaping (Result<[Task],Error>) -> Void){
+    static func load(completion : @escaping (Result<[Task],Error>) -> Void) {
         DispatchQueue.global(qos: .background).async {
             do {
                 let fileURL = try fileURL()

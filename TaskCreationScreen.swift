@@ -61,7 +61,7 @@ struct TaskCreationScreen: View {
                     .bold()
                     .foregroundColor(Color.black)
                 HStack{
-                    if isInSelectionMode && !hide{
+                    if isInSelectionMode && !hide {
                         DatePickerButton(title: "Aujourd'hui", timeVariation: .day, value: 0, iconName: "sun.max", currentDate: $taskDate) {
                             withAnimation {
                                 hide = true
@@ -82,7 +82,7 @@ struct TaskCreationScreen: View {
                         }
                         ChooseDateHourButton(date: $taskDate, hide: $hide)
                     } else {
-                        DateChoosen(date: $taskDate, isShowingHour: isShowingHour) {
+                        DateChoosen(date: currentDate, isShowingHour: isShowingHour) {
                             withAnimation {
                                 hide = false
                             }
@@ -110,6 +110,9 @@ struct TaskCreationScreen: View {
             }
             
         }
+        .padding()
+        .background(Color("lightBlue"))
+        .preferredColorScheme(.dark)
     }
 }
 

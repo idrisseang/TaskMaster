@@ -12,7 +12,7 @@ class Task : Identifiable, Codable{
     let name : String
     var date : Date?
     let category : String
-    
+
     init(name : String , date : Date?, category : String) {
         self.name = name
         self.date = nil
