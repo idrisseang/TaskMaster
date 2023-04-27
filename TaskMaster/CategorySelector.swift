@@ -16,7 +16,7 @@ struct CategorySelector: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack{
-                ForEach(categoriesImages, id: \.self) { category in
+                ForEach (categoriesImages, id: \.self) { category in
                     Button{
                         if (isTaskCreationScreen) {
                             selectedCategory = category.rawValue

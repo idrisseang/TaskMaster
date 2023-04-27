@@ -36,7 +36,7 @@ struct TaskCell: View {
                             .foregroundColor(Color(white:0.4))
                             .strikethrough(true,pattern: .solid,color:.black)
                     }
-                    Text("\(task.formatDate(date: task.date, isIncludingHour: isShowingHour))")
+                    Text("\(formatDate(date: task.date, isIncludingHour: isShowingHour))")
                         .font(.system(size: 16,weight: .light))
                         .foregroundColor(Color(white:0.4))
                 }
@@ -56,25 +56,28 @@ struct TaskCell: View {
                         }
                     }
             }
+            Image(task.category)
+                .resizable()
+                .frame(width: 40,height: 40)
             
-            if isDetailedMode && isFinishedTask {
-                HStack{
-                    Button {
-                        onDelete()
-                    } label: {
-                        Text("Supprimer")
-                            .foregroundColor(.red)
-                    }
+        }
+        if isDetailedMode && isFinishedTask {
+            HStack{
+                Button {
+                    onDelete()
+                } label: {
+                    Text("Supprimer")
+                        .foregroundColor(.red)
                 }
             }
-        }
-        .padding()
-        .padding(.horizontal,12)
-        .background(.white)
-        .cornerRadius(32)
-        .onTapGesture {
-            withAnimation {
-                isDetailedMode.toggle()
+            .padding()
+            .padding(.horizontal,12)
+            .background(.white)
+            .cornerRadius(32)
+            .onTapGesture {
+                withAnimation {
+                    isDetailedMode.toggle()
+                }
             }
         }
     }

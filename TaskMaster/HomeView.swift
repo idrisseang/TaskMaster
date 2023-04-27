@@ -81,7 +81,7 @@ struct HomeView: View {
         })
         .background(Color("lightBlue"))
         .sheet(isPresented: $isShowingNewTaskScreen) {
-            TaskCreationScreen{ newTask in
+            TaskCreationScreen(isShowingHour: $isShowingHour){ newTask in
                 tasksList.tasks.append(newTask)
             }
         }
@@ -100,6 +100,6 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(isShowingHour: .constant(true))
+        HomeView(isShowingHour: .constant(false))
     }
 }

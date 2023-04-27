@@ -13,7 +13,7 @@ class TaskList : ObservableObject{
     init(tasks: [Task]) {
         self.tasks = tasks
     }
-    
+
     static func save(tasks : [Task], completion : @escaping (Result<Int,Error>) -> Void) {
         DispatchQueue.global(qos: .background).async {
             do {
@@ -23,7 +23,7 @@ class TaskList : ObservableObject{
                 DispatchQueue.main.async {
                     completion(.success(tasks.count))
                 }
-            } catch{
+            } catch {
                 DispatchQueue.main.async {
                     completion(.failure(error))
                 }

@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct DateChoosen: View {
-    
     @Binding var date : Date
     let isShowingHour : Bool
     let onClick : () -> Void
-    
-    func formatDate(date:Date,isIncludingHour : Bool) -> String{
+    func formatDate(date:Date,isIncludingHour : Bool) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "fr_FR")
         if isIncludingHour {

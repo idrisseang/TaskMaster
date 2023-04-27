@@ -16,7 +16,7 @@ struct TaskCreationScreen: View {
     @State private var selectedCategory : String = ""
     @State private var isInSelectionMode : Bool = true
     @State private var hide : Bool = false
-    @State private var isShowingHour : Bool = true
+    @Binding  var isShowingHour : Bool
     var onTaskCreated : (Task) -> Void
     
     var body: some View {
@@ -54,7 +54,7 @@ struct TaskCreationScreen: View {
                     .padding(-7)
             }
             Spacer()
-            VStack(alignment : .leading) {
+            VStack(alignment : .leading){
                 Text("Date d'échéance")
                     .font(.title2)
                     .bold()
@@ -81,7 +81,7 @@ struct TaskCreationScreen: View {
                         }
                         ChooseDateHourButton(date: $taskDate, hide: $hide)
                     } else {
-                        DateChoosen(date: $taskDate, isShowingHour: isShowingHour) {
+                        DateChoosen(date: $taskDate, isShowingHour: isShowingHour){
                             withAnimation {
                                 hide = false
                                 taskDate = Date()
@@ -106,7 +106,7 @@ struct TaskCreationScreen: View {
 
 struct TaskCreationScreen_Previews: PreviewProvider {
     static var previews: some View {
-        TaskCreationScreen {_ in
+        TaskCreationScreen (isShowingHour: .constant(false)){_ in
             return
         }
     }
