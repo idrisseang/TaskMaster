@@ -25,7 +25,6 @@ struct HomeView: View {
                     Text("Cliquez sur une catégorie pour voir les tâches👇")
                         .foregroundColor(Color(white:0.4))
                     CategorySelector(selectedCategories: $selectedCategories)
-                    
                 }
                 Spacer()
                 VStack(alignment: .leading, spacing: 20){
@@ -48,16 +47,12 @@ struct HomeView: View {
                                     
                                 }
                                 .padding(.trailing)
-                                
                             }
-                        
                     }
-                    
                     Text("Vous avez actuellement \(Text("\(tasksList.tasks.count)").bold() .foregroundColor(.black)) tâches ")
                         .foregroundColor(Color(white:0.4))
-                    ForEach(tasksList.tasks) { task in
-                        
-                        if selectedCategories.contains(task.categories)||selectedCategories.contains("all") {
+                    ForEach (tasksList.tasks) { task in
+                        if selectedCategories.contains(task.categories) || selectedCategories.contains("all") {
                             withAnimation {
                                 TaskCell(task: task, isShowingHour: $isShowingHour) {
                                     selectedTaskToDelete = task
@@ -66,7 +61,6 @@ struct HomeView: View {
                                             taskToDelete.id == selectedTaskToDelete!.id
                                         }
                                     }
-                                    
                                     selectedTaskToDelete = nil
                                 }
                             }
@@ -85,7 +79,6 @@ struct HomeView: View {
                 }
             }
         })
-        
         .background(Color("lightBlue"))
         .sheet(isPresented: $isShowingNewTaskScreen) {
             TaskCreationScreen{ newTask in
@@ -94,16 +87,13 @@ struct HomeView: View {
         }
         .onAppear{
             TaskList.load { result in
-                switch result{
+                switch result {
                 case .failure(let error):
                     fatalError(error.localizedDescription)
                 case .success(let tasks):
                     tasksList.tasks = tasks
                 }
             }
-            
-            
-            
         }
     }
 }

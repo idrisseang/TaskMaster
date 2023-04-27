@@ -11,6 +11,7 @@ struct AccentButton: View {
     let name : String
     let color : Color
     let action : () -> Void
+    
     var body: some View {
         Button {
             action()
@@ -24,13 +25,8 @@ struct AccentButton: View {
                 .background(color)
                 .cornerRadius(.infinity)
                 .padding()
-                
-                
         }
-
     }
-    
- 
 }
 
 struct AccentButton_Previews: PreviewProvider {

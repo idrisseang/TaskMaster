@@ -10,31 +10,30 @@ import SwiftUI
 struct CategorySelector: View {
     let categoriesImages = Category.allCases
     @Binding var selectedCategories : [String]
+    
     var body: some View {
-        ScrollView(.horizontal,showsIndicators: false){
+        ScrollView(.horizontal,showsIndicators: false) {
             HStack{
                 ForEach(categoriesImages, id: \.self) { category in
-                    Button{
+                    Button {
                         if selectedCategories.contains(category.rawValue) {
                             selectedCategories.removeAll(where: { $0 == category.rawValue })
                         } else {
                             selectedCategories.append(category.rawValue)
                         }
-                    }label: {
+                    } label: {
                         Circle()
                             .frame(width: 65,height: 65)
                             .foregroundColor(selectedCategories.contains(category.rawValue) ? Color("AccentBlue") .opacity(0.5) : .white)
-                            .overlay{
+                            .overlay {
                                 Image(category.rawValue)
                                     .resizable()
                                     .frame(width: 40,height: 40)
                             }
-                            
                     }
                 }
             }
         }
-        
     }
 }
 

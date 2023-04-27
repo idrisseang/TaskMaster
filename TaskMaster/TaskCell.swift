@@ -14,25 +14,24 @@ struct TaskCell: View {
     @Binding var isShowingHour : Bool
     @State private var date : Date? = nil
     let onDelete : () -> Void
+    
     var body: some View {
         VStack{
-            HStack(){
+            HStack{
                 Button {
                     isFinishedTask.toggle()
                 } label: {
                     Image(systemName: isFinishedTask ? "circle.circle.fill" : "circle.circle")
                         .font(.system(size: 24, weight: .light))
                         .foregroundColor(isFinishedTask ? Color("lightBlue") : Color(white:0.4))
-                        
                 }
-              
                 Spacer()
                 VStack(spacing: 12){
-                    if !isFinishedTask{
+                    if !isFinishedTask {
                         Text(task.name)
                             .font(.headline)
                             .foregroundColor(.black)
-                    }else{
+                    } else {
                         Text(task.name)
                             .font(.system(size: 18,weight: .light))
                             .foregroundColor(Color(white:0.4))
@@ -59,24 +58,17 @@ struct TaskCell: View {
                                     .resizable()
                                     .frame(width: 40,height: 40)
                             }
-                            
                         }
-
-                        
                     }
-                
             }
-            
-            if isDetailedMode && isFinishedTask{
+            if isDetailedMode && isFinishedTask {
                 HStack{
                     Button {
                         onDelete()
                     } label: {
                         Text("Supprimer")
                             .foregroundColor(.red)
-                        
                     }
-
                 }
             }
         }
@@ -89,23 +81,14 @@ struct TaskCell: View {
                 isDetailedMode.toggle()
             }
         }
-        
-        
-        
     }
 }
 
 struct TaskCell_Previews: PreviewProvider {
     static var previews: some View {
-        TaskCell(task: previewTasks[1], isShowingHour: .constant(true),onDelete: {
-            //
-        })
+        TaskCell(task: previewTasks[1], isShowingHour: .constant(true),onDelete: {})
             .padding(24)
             .background(Color("lightBlue"))
             .previewLayout(.sizeThatFits)
-            
-        
-            
     }
-        
 }
