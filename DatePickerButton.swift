@@ -13,13 +13,13 @@ struct DatePickerButton: View {
     let timeVariation : Calendar.Component
     let value : Int
     let iconName : String
-    @Binding var currentDate : Date
+    @Binding var currentDate : Date?
     let onClick : () -> Void
 
     var body: some View {
             Button {
                 let calendar = Calendar.current
-                let datePicked = calendar.date(byAdding: timeVariation, value: value,to: currentDate)
+                let datePicked = calendar.date(byAdding: timeVariation, value: value,to: currentDate ?? Date())
                 currentDate = datePicked!
                 onClick()
                 

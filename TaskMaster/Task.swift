@@ -28,7 +28,7 @@ class Task : Identifiable, Codable{
     }
     init(name : String , date : Date?, categories : [String]) {
         self.name = name
-        self.date = date
+        self.date = nil
         self.categories = categories
     }
     

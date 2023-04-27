@@ -24,6 +24,7 @@
 		2C9383A329E2D8F1002081FC /* AccentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9383A229E2D8F1002081FC /* AccentButton.swift */; };
 		2C9383A529E2E3B5002081FC /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9383A429E2E3B5002081FC /* TaskList.swift */; };
 		2C9383A929E59003002081FC /* DatePickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9383A829E59003002081FC /* DatePickerButton.swift */; };
+		2CC2C3F429FA79340026FA82 /* formatDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2C3F329FA79340026FA82 /* formatDate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		2C9383A229E2D8F1002081FC /* AccentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentButton.swift; sourceTree = "<group>"; };
 		2C9383A429E2E3B5002081FC /* TaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskList.swift; sourceTree = "<group>"; };
 		2C9383A829E59003002081FC /* DatePickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerButton.swift; sourceTree = "<group>"; };
+		2CC2C3F329FA79340026FA82 /* formatDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = formatDate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 				2C36612129E203EA00540EF3 /* Category.swift */,
 				2C36612329E2044A00540EF3 /* previewData.swift */,
 				2C36612529E2091500540EF3 /* TaskCell.swift */,
+				2CC2C3F329FA79340026FA82 /* formatDate.swift */,
 				2C36612729E215C000540EF3 /* HomeView.swift */,
 				2C36612929E2167900540EF3 /* CategorySelector.swift */,
 				2C36611529E2032800540EF3 /* Assets.xcassets */,
@@ -186,6 +189,7 @@
 			files = (
 				2C51C03729E2B66100781DC2 /* TaskCreationScreen.swift in Sources */,
 				2C9383A929E59003002081FC /* DatePickerButton.swift in Sources */,
+				2CC2C3F429FA79340026FA82 /* formatDate.swift in Sources */,
 				2C42B41E29E6FAE700045053 /* DatePickerScreen.swift in Sources */,
 				2C9383A529E2E3B5002081FC /* TaskList.swift in Sources */,
 				2C42B41A29E68DF600045053 /* DateChoosen.swift in Sources */,
