@@ -11,10 +11,11 @@ struct ChooseDateHourButton: View {
     @State private var isShowingDatePickerScreen : Bool = false
     @Binding var date : Date
     @Binding var hide : Bool
+    
     var body: some View {
         VStack{
             Button {
-              isShowingDatePickerScreen = true
+                isShowingDatePickerScreen = true
             } label: {
                 VStack{
                     Image(systemName: "calendar.badge.clock")
@@ -27,13 +28,11 @@ struct ChooseDateHourButton: View {
                 .padding(4)
                 .background(Color("AccentBlue"))
                 .cornerRadius(8)
-         
             }
         }
         .sheet(isPresented: $isShowingDatePickerScreen) {
             DatePickerScreen(date: $date,hide: $hide)
         }
-        
     }
 }
 

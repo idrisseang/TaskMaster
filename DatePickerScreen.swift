@@ -17,12 +17,11 @@ struct DatePickerScreen: View {
     func formatDate(date:Date,isIncludingHour : Bool) -> String{
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "fr_FR")
-        if isIncludingHour{
+        if isIncludingHour {
             dateFormatter.dateFormat = "EEE d MMMM YYYY 'à' HH:mm"
-        }else{
+        } else {
             dateFormatter.dateFormat = "EEE d MMMM YYYY"
         }
-        
         let dateFormatted = dateFormatter.string(from: date)
         return dateFormatted
     }
@@ -34,7 +33,7 @@ struct DatePickerScreen: View {
                 Spacer()
                 if !isOn{
                     Text("\(formatDate(date:date,isIncludingHour:false))")
-                }else{
+                } else {
                     Text("\(formatDate(date:date,isIncludingHour:true))")
                 }
             }
@@ -61,7 +60,6 @@ struct DatePickerScreen: View {
                     .colorScheme(.dark)
                     .colorInvert()
                     .colorMultiply(Color("AccentBlue"))
-                
                 Divider()
                     .foregroundColor(Color(white:0.4))
                     .padding(.horizontal)
@@ -72,8 +70,6 @@ struct DatePickerScreen: View {
                         .foregroundColor(.black)
                     Toggle("", isOn: $isOn)
                         .toggleStyle(SwitchToggleStyle(tint: Color("AccentBlue")))
-                        
-                    
                 }
                 .padding(.horizontal)
                 
@@ -90,7 +86,6 @@ struct DatePickerScreen: View {
                             .colorScheme(.dark)
                             .colorInvert()
                             .colorMultiply(Color("AccentBlue"))
-                            
                     }
                 }
                 Spacer()
@@ -98,15 +93,10 @@ struct DatePickerScreen: View {
                     presentationMode.wrappedValue.dismiss()
                     hide = true
                 })
-                
-                
             }
         }
         .padding(.top)
         .background(Color("lightBlue"))
-        
-        
-       
     }
 }
 

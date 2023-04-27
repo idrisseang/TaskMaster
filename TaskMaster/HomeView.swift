@@ -25,7 +25,6 @@ struct HomeView: View {
                     Text("Cliquez sur une catégorie pour voir les tâches👇")
                         .foregroundColor(Color(white:0.4))
                     CategorySelector(selectedCategories: $selectedCategories)
-                    
                 }
                 Spacer()
                 VStack(alignment: .leading, spacing: 20){
@@ -45,19 +44,14 @@ struct HomeView: View {
                                     Image(systemName: "plus")
                                         .font(.system(size: 20,weight: .bold))
                                         .foregroundColor(Color("AccentBlue"))
-                                    
                                 }
                                 .padding(.trailing)
-                                
                             }
-                        
                     }
-                    
                     Text("Vous avez actuellement \(Text("\(tasksList.tasks.count)").bold() .foregroundColor(.black)) tâches ")
                         .foregroundColor(Color(white:0.4))
-                    ForEach(tasksList.tasks) { task in
-                        
-                        if selectedCategories.contains(task.categories)||selectedCategories.contains("all") {
+                    ForEach (tasksList.tasks) { task in
+                        if selectedCategories.contains(task.categories) || selectedCategories.contains("all") {
                             withAnimation {
                                 TaskCell(task: task, isShowingHour: $isShowingHour) {
                                     selectedTaskToDelete = task
@@ -66,7 +60,6 @@ struct HomeView: View {
                                             taskToDelete.id == selectedTaskToDelete!.id
                                         }
                                     }
-                                    
                                     selectedTaskToDelete = nil
                                 }
                             }
@@ -77,7 +70,7 @@ struct HomeView: View {
             .padding()
         }
         .onChange(of: scenePhase, perform: { phase in
-            if phase == .inactive{
+            if phase == .inactive {
                 TaskList.save(tasks: tasksList.tasks) { result in
                     if case.failure(let error) = result {
                         fatalError(error.localizedDescription)
@@ -85,31 +78,27 @@ struct HomeView: View {
                 }
             }
         })
-        
         .background(Color("lightBlue"))
         .sheet(isPresented: $isShowingNewTaskScreen) {
-            TaskCreationScreen{ newTask in
+            TaskCreationScreen(isShowingHour: $isShowingHour){ newTask in
                 tasksList.tasks.append(newTask)
             }
         }
         .onAppear{
             TaskList.load { result in
-                switch result{
+                switch result {
                 case .failure(let error):
                     fatalError(error.localizedDescription)
                 case .success(let tasks):
                     tasksList.tasks = tasks
                 }
             }
-            
-            
-            
         }
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(isShowingHour: .constant(true))
+        HomeView(isShowingHour: .constant(false))
     }
 }
