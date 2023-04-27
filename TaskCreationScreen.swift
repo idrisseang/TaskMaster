@@ -55,7 +55,7 @@ struct TaskCreationScreen: View {
                     .padding(-7)
             }
             Spacer()
-            VStack(alignment : .leading){
+            VStack(alignment : .leading) {
                 Text("Date d'échéance")
                     .font(.title2)
                     .bold()
@@ -85,6 +85,12 @@ struct TaskCreationScreen: View {
                         DateChoosen(date: currentDate, isShowingHour: isShowingHour) {
                             withAnimation {
                                 hide = false
+                                DateChoosen(date: $taskDate, isShowingHour: isShowingHour) {
+                                    withAnimation {
+                                        hide = false
+                                        taskDate = Date()
+                                    }
+                                }
                             }
                         }
                     }
@@ -108,14 +114,9 @@ struct TaskCreationScreen: View {
                     presentationMode.wrappedValue.dismiss()
                 })
             }
-            
+            }
         }
-        .padding()
-        .background(Color("lightBlue"))
-        .preferredColorScheme(.dark)
     }
-}
-
 
 struct TaskCreationScreen_Previews: PreviewProvider {
     static var previews: some View {
@@ -124,3 +125,5 @@ struct TaskCreationScreen_Previews: PreviewProvider {
         }
     }
 }
+
+

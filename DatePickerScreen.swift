@@ -19,10 +19,10 @@ struct DatePickerScreen: View {
             HStack{
                 Text("Echéance")
                 Spacer()
-                if !isOn{
-                    Text("\(formatDate(date:date ?? Date(),isIncludingHour:false))")
+                if !isOn {
+                    Text("\(formatDate(date:date ?? Date(), isIncludingHour:false))")
                 } else {
-                    Text("\(formatDate(date:date ?? Date(),isIncludingHour:true))")
+                    Text("\(formatDate(date:date ?? Date(), isIncludingHour:true))")
                 }
             }
             .padding()
@@ -96,16 +96,16 @@ struct DatePickerScreen: View {
                                 .colorMultiply(Color("AccentBlue"))
                         }
                     }
+                    Spacer()
+                    AccentButton(name: "Valider", color: .black, action: {
+                        presentationMode.wrappedValue.dismiss()
+                        hide = true
+                    })
                 }
-                Spacer()
-                AccentButton(name: "Valider", color: .black, action: {
-                    presentationMode.wrappedValue.dismiss()
-                    hide = true
-                })
             }
+            .padding(.top)
+            .background(Color("lightBlue"))
         }
-        .padding(.top)
-        .background(Color("lightBlue"))
     }
 }
 

@@ -49,7 +49,7 @@ struct TaskCell: View {
                     .frame(width: 65,height: 65)
                     .foregroundColor(Color("lightBlue"))
                     .opacity(0.7)
-                    .overlay{
+                    .overlay {
                         Button {
                             //
                         } label: {

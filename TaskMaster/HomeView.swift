@@ -19,7 +19,7 @@ struct HomeView: View {
     var body: some View {
         ScrollView{
             VStack{
-                VStack(alignment: .leading, spacing: 24){
+                VStack(alignment: .leading, spacing: 24) {
                     Text("Categories")
                         .font(.system(size: 32,weight: .light))
                         .foregroundColor(.black)
@@ -81,11 +81,12 @@ struct HomeView: View {
         })
         .background(Color("lightBlue"))
         .sheet(isPresented: $isShowingNewTaskScreen) {
+            
             TaskCreationScreen(isShowingHour: $isShowingHour){ newTask in
                 tasksList.tasks.append(newTask)
             }
         }
-        .onAppear{
+        .onAppear {
             TaskList.load { result in
                 switch result {
                 case .failure(let error):
