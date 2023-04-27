@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DatePickerScreen: View {
     @Environment (\.presentationMode) var presentationMode
-    @Binding var date : Date
+    @Binding var date : Date?
     @FocusState private var isFocused : Bool
     @State private var isOn : Bool = false
     @Binding var hide : Bool
@@ -33,9 +33,9 @@ struct DatePickerScreen: View {
                 Text("Echéance")
                 Spacer()
                 if !isOn{
-                    Text("\(formatDate(date:date,isIncludingHour:false))")
+                    Text("\(formatDate(date:date ?? Date(),isIncludingHour:false))")
                 }else{
-                    Text("\(formatDate(date:date,isIncludingHour:true))")
+                    Text("\(formatDate(date:date ?? Date(),isIncludingHour:true))")
                 }
             }
             .padding()
@@ -51,16 +51,23 @@ struct DatePickerScreen: View {
                         .foregroundColor(.black)
                 }
                 .padding(.horizontal)
-                Divider()
-                    .foregroundColor(Color(white:0.4))
-                    .padding(.horizontal)
-                DatePicker("", selection: $date,displayedComponents: .date)
-                    .environment(\.locale, Locale(identifier: "fr_FR"))
-                    .datePickerStyle(GraphicalDatePickerStyle())
-                    .accentColor(.black)
-                    .colorScheme(.dark)
-                    .colorInvert()
-                    .colorMultiply(Color("AccentBlue"))
+                if let unwrappedDate = date {
+                    DatePicker("", selection: Binding<Date>(get: { unwrappedDate }, set: { date = $0 }), displayedComponents: .date)
+                        .environment(\.locale, Locale(identifier: "fr_FR"))
+                        .datePickerStyle(GraphicalDatePickerStyle())
+                        .accentColor(.black)
+                        .colorScheme(.dark)
+                        .colorInvert()
+                        .colorMultiply(Color("AccentBlue"))
+                } else {
+                    DatePicker("", selection: Binding<Date>(get: { Date() }, set: { date = $0 }), displayedComponents: .date)
+                        .environment(\.locale, Locale(identifier: "fr_FR"))
+                        .datePickerStyle(GraphicalDatePickerStyle())
+                        .accentColor(.black)
+                        .colorScheme(.dark)
+                        .colorInvert()
+                        .colorMultiply(Color("AccentBlue"))
+                }
                 
                 Divider()
                     .foregroundColor(Color(white:0.4))
@@ -82,14 +89,25 @@ struct DatePickerScreen: View {
                         .foregroundColor(Color(white:0.4))
                         .padding(.horizontal)
                     VStack(alignment: .center){
-                        DatePicker("", selection: $date, displayedComponents: .hourAndMinute)
-                            .datePickerStyle(.wheel)
-                            .environment(\.locale, Locale(identifier: "fr_FR"))
-                            .frame(width: 375,height: 190)
-                            .accentColor(.black)
-                            .colorScheme(.dark)
-                            .colorInvert()
-                            .colorMultiply(Color("AccentBlue"))
+                        if let unwrappedDate = date {
+                            DatePicker("", selection: Binding<Date>(get: { unwrappedDate }, set: { date = $0 }),displayedComponents: .hourAndMinute)
+                                .datePickerStyle(.wheel)
+                                .environment(\.locale, Locale(identifier: "fr_FR"))
+                                .frame(width: 375,height: 190)
+                                .accentColor(.black)
+                                .colorScheme(.dark)
+                                .colorInvert()
+                                .colorMultiply(Color("AccentBlue"))
+                        } else {
+                            DatePicker("", selection: Binding<Date>(get: { Date() }, set: { date = $0 }), displayedComponents: .hourAndMinute)
+                                .datePickerStyle(.wheel)
+                                .environment(\.locale, Locale(identifier: "fr_FR"))
+                                .frame(width: 375,height: 190)
+                                .accentColor(.black)
+                                .colorScheme(.dark)
+                                .colorInvert()
+                                .colorMultiply(Color("AccentBlue"))
+                        }
                             
                     }
                 }

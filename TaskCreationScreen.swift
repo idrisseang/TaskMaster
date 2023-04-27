@@ -11,7 +11,8 @@ struct TaskCreationScreen: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
     @State private var taskName = ""
-    @State private var taskDate : Date = Date()
+    @State private var taskDate : Date?
+    @State private var currentDate = Date()
     @State private var selectedCategories : [String] = []
     @State private var isInSelectionMode : Bool = true
     @State private var hide : Bool = false
@@ -65,19 +66,19 @@ struct TaskCreationScreen: View {
                     .foregroundColor(Color.black)
                 HStack{
                     if isInSelectionMode && !hide{
-                        DatePickerButton(title: "Aujourd'hui", timeVariation: .day, value: 0, iconName: "sun.max", currentDate: $taskDate) {
+                        DatePickerButton(title: "Aujourd'hui", timeVariation: .day, value: 0, iconName: "sun.max", currentDate: $currentDate) {
                             withAnimation {
                                 hide = true
                                 isShowingHour = false
                             }
                         }
-                        DatePickerButton(title: "Demain", timeVariation: .day, value: 1, iconName: "sunrise", currentDate: $taskDate) {
+                        DatePickerButton(title: "Demain", timeVariation: .day, value: 1, iconName: "sunrise", currentDate: $currentDate) {
                             withAnimation {
                                 hide = true
                                 isShowingHour = false
                             }
                         }
-                        DatePickerButton(title: "Dans 1h", timeVariation: .hour, value: 1, iconName: "hourglass", currentDate: $taskDate) {
+                        DatePickerButton(title: "Dans 1h", timeVariation: .hour, value: 1, iconName: "hourglass", currentDate: $currentDate) {
                             withAnimation {
                                 hide = true
                                 isShowingHour = true
@@ -90,8 +91,8 @@ struct TaskCreationScreen: View {
                         DateChoosen(date: $taskDate, isShowingHour: isShowingHour) {
                                 withAnimation {
                                     hide = false
-                                    taskDate = Date()
                                 }
+                            currentDate = Date()
                             }
                     }
                 }

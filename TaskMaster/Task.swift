@@ -10,7 +10,7 @@ import Foundation
 class Task : Identifiable, Codable{
    var id = UUID()
     let name : String
-    var date : Date
+    var date : Date?
     let categories: [String]
     
     
@@ -26,7 +26,7 @@ class Task : Identifiable, Codable{
         let dateFormatted = dateFormatter.string(from: date)
         return dateFormatted
     }
-    init(name : String , date : Date, categories : [String]) {
+    init(name : String , date : Date?, categories : [String]) {
         self.name = name
         self.date = date
         self.categories = categories

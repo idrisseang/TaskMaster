@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DateChoosen: View {
     
-   @Binding var date : Date
+   @Binding var date : Date?
     let isShowingHour : Bool
     let onClick : () -> Void
     
@@ -27,7 +27,7 @@ struct DateChoosen: View {
     }
     var body: some View {
         HStack(spacing:4){
-            Text(formatDate(date:date,isIncludingHour: isShowingHour))
+            Text(formatDate(date:date ?? Date(),isIncludingHour: isShowingHour))
                 
                 .font(.footnote)
                 .bold()

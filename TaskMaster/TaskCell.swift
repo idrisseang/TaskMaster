@@ -12,7 +12,6 @@ struct TaskCell: View {
     @State private var isFinishedTask = false
     @State private var isDetailedMode = false
     @Binding var isShowingHour : Bool
-    
     let onDelete : () -> Void
     var body: some View {
         VStack{
@@ -38,10 +37,9 @@ struct TaskCell: View {
                             .foregroundColor(Color(white:0.4))
                             .strikethrough(true,pattern: .solid,color:.black)
                     }
-                    Text("\(task.formatDate(date: task.date, isIncludingHour: isShowingHour))")
+                    Text("\(task.formatDate(date: task.date ?? Date(), isIncludingHour: isShowingHour))")
                         .font(.system(size: 16,weight: .light))
                         .foregroundColor(Color(white:0.4))
-                    
                 }
                 .padding()
                 Spacer()

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ChooseDateHourButton: View {
     @State private var isShowingDatePickerScreen : Bool = false
-    @Binding var date : Date
+    @Binding var date : Date?
     @Binding var hide : Bool
     var body: some View {
         VStack{
