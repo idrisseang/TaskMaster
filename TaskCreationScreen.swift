@@ -109,9 +109,9 @@ struct TaskCreationScreen: View {
                     presentationMode.wrappedValue.dismiss()
                 })
             }
-            }
         }
     }
+}
 
 struct TaskCreationScreen_Previews: PreviewProvider {
     static var previews: some View {
