@@ -52,7 +52,7 @@ struct TaskCreationScreen: View {
                     .bold()
                     .foregroundColor(Color.black)
                     .padding(-7)
-                CategorySelector(selectedCategories: $selectedCategories, selectedCategory: $selectedCategory, isTaskCreationScreen: true)
+                CategorySelector(selectedCategories: $selectedCategories, selectedCategory: $selectedCategory, isTaskCreationScreen: .constant(true))
             }
             Spacer()
             VStack(alignment : .leading){
@@ -82,34 +82,26 @@ struct TaskCreationScreen: View {
                         }
                         ChooseDateHourButton(date: $taskDate, hide: $hide)
                     } else {
-                        DateChoosen(date: $taskDate, isShowingHour: isShowingHour){
+                        DateChoosen(date: currentDate, isShowingHour: isShowingHour){
                             withAnimation {
                                 hide = false
                                 taskDate = Date()
                             }
                         }
                     }
-                        .frame(maxWidth: .infinity,alignment: .leading)
+                }
+                .frame(maxWidth: .infinity,alignment: .leading)
                     Spacer()
-                    Text(taskDate!.description)
                     AccentButton(name: "Ajouter", color: .black, action: {
-                        let newTask = Task(name: taskName, date: taskDate, categories: selectedCategories)
+                        let newTask = Task(name: taskName, date: taskDate, category: selectedCategory)
                         onTaskCreated(newTask)
                         presentationMode.wrappedValue.dismiss()
                     })
-                }
-                .padding()
-                .background(Color("lightBlue"))
-                .preferredColorScheme(.dark)
-                .frame(maxWidth: .infinity,alignment: .leading)
-                Spacer()
-                AccentButton(name: "Ajouter", color: .black, action: {
-                    let newTask = Task(name: taskName, date: taskDate, categories: selectedCategories)
-                    onTaskCreated(newTask)
-                    presentationMode.wrappedValue.dismiss()
-                })
             }
         }
+        .padding()
+        .background(Color("lightBlue"))
+        .preferredColorScheme(.dark)
     }
 }
 

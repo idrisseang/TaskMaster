@@ -16,57 +16,68 @@ struct TaskCell: View {
     let onDelete : () -> Void
     
     var body: some View {
-        VStack{
-            HStack{
-                Button {
-                    isFinishedTask.toggle()
-                } label: {
-                    Image(systemName: isFinishedTask ? "circle.circle.fill" : "circle.circle")
-                        .font(.system(size: 24, weight: .light))
-                        .foregroundColor(isFinishedTask ? Color("lightBlue") : Color(white:0.4))
-                }
-                Spacer()
-                VStack(spacing: 12){
-                    if !isFinishedTask {
-                        Text(task.name)
-                            .font(.headline)
-                            .foregroundColor(.black)
-                    } else {
-                        Text(task.name)
-                            .font(.system(size: 18,weight: .light))
-                            .foregroundColor(Color(white:0.4))
-                            .strikethrough(true,pattern: .solid,color:.black)
+            VStack{
+                HStack(){
+                    Button {
+                        isFinishedTask.toggle()
+                    } label: {
+                        Image(systemName: isFinishedTask ? "circle.circle.fill" : "circle.circle")
+                            .font(.system(size: 24, weight: .light))
+                            .foregroundColor(isFinishedTask ? Color("lightBlue") : Color(white:0.4))
                     }
-                    if task.date != nil {
-                        Text("\(formatDate(date: task.date ?? Date(), isIncludingHour: isShowingHour))")
-                            .font(.system(size: 16,weight: .light))
-                            .foregroundColor(Color(white:0.4))
+                    Spacer()
+                    VStack(alignment : .leading, spacing: 12){
+                                Text(task.name)
+                                    .font(.headline)
+                                    .foregroundColor(isFinishedTask ? Color(white:(0.4)) : .black)
+                                    .strikethrough(isFinishedTask,pattern: .solid, color: .black)
+                        if task.date != nil {
+                            Text("\(formatDate(date: task.date!, isIncludingHour: isShowingHour))")
+                                .font(.system(size: 16,weight: .light))
+                                .foregroundColor(Color(white:0.4))
+                        }
+                    }
+                    .padding()
+                    Spacer()
+                    Circle()
+                        .frame(width: 65,height: 65)
+                        .foregroundColor(Color("lightBlue"))
+                        .opacity(0.7)
+                        .overlay{
+                            Button {
+                            } label: {
+                                Image(task.category)
+                                    .resizable()
+                                    .frame(width: 40,height: 40)
+                            }
+                        }
+                }
+                if isDetailedMode && isFinishedTask {
+                    HStack{
+                        Button {
+                            onDelete()
+                        } label: {
+                            Text("Supprimer")
+                                .foregroundColor(.red)
+                        }
                     }
                 }
-                .padding()
-                Spacer()
-                Circle()
-                    .frame(width: 65,height: 65)
-                    .foregroundColor(Color("lightBlue"))
-                    .opacity(0.7)
-                    .overlay {
+                if isDetailedMode && !isFinishedTask {
+                    HStack{
                         Button {
                             //
                         } label: {
-                            Image(task.category)
-                                .resizable()
-                                .frame(width: 40,height: 40)
+                            Text("Renommer")
                         }
+                        .frame(maxWidth: .infinity)
+                        Button {
+                            //
+                        } label: {
+                            Text("Changer date")
+                        }
+                        .frame(maxWidth: .infinity)
                     }
-            }
-        }
-        if isDetailedMode && isFinishedTask {
-            HStack{
-                Button {
-                    onDelete()
-                } label: {
-                    Text("Supprimer")
-                        .foregroundColor(.red)
+                    .foregroundColor(Color("AccentBlue"))
                 }
             }
             .padding()
@@ -79,14 +90,17 @@ struct TaskCell: View {
                 }
             }
         }
+        
+        private enum Field : Int, Hashable{
+            case taskName
+        }
     }
-}
 
-struct TaskCell_Previews: PreviewProvider {
-    static var previews: some View {
-        TaskCell(task: previewTasks[1], isShowingHour: .constant(true),onDelete: {})
-            .padding(24)
-            .background(Color("lightBlue"))
-            .previewLayout(.sizeThatFits)
+    struct TaskCell_Previews: PreviewProvider {
+        static var previews: some View {
+            TaskCell(task: previewTasks[0], isShowingHour: .constant(true), onDelete:{})
+                .padding(24)
+                .background(Color("lightBlue"))
+                .previewLayout(.sizeThatFits)
+        }
     }
-}
