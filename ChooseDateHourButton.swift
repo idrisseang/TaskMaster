@@ -8,16 +8,15 @@
 import SwiftUI
 
 struct ChooseDateHourButton: View {
-    @State private var isShowingDatePickerScreen : Bool = false
-    @Binding var date : Date?
-    @Binding var hide : Bool
-    
+    @State private var isShowingDatePickerScreen: Bool = false
+    @Binding var date: Date?
+    @Binding var hide: Bool
     var body: some View {
-        VStack{
+        VStack {
             Button {
                 isShowingDatePickerScreen = true
             } label: {
-                VStack{
+                VStack {
                     Image(systemName: "calendar.badge.clock")
                         .font(.footnote)
                     Text("Date et heure")
@@ -31,7 +30,7 @@ struct ChooseDateHourButton: View {
             }
         }
         .sheet(isPresented: $isShowingDatePickerScreen) {
-            DatePickerScreen(date: $date,hide: $hide)
+            DatePickerScreen(date: $date, hide: $hide)
         }
     }
 }

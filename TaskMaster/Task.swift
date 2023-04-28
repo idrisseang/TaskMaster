@@ -7,19 +7,19 @@
 
 import Foundation
 
-class Task : Identifiable, Codable{
+class Task: Identifiable, Codable {
     var id = UUID()
-    let name : String
-    var date : Date?
+    let name: String
+    var date: Date?
     let category: String
     
-    init(name : String , date : Date?, category : String) {
+    init(name: String, date: Date?, category: String) {
         self.name = name
         self.date = nil
         self.category = category
     }
     
-    enum CodingKeys : CodingKey {
+    enum CodingKeys: CodingKey {
         case id
         case name
         case date

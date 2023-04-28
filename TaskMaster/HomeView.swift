@@ -11,27 +11,29 @@ struct HomeView: View {
     @Environment (\.scenePhase) private var scenePhase
     @StateObject private var tasksList = TaskList(tasks: [])
     @State private var isShowingNewTaskScreen = false
-    @State private var selectedCategories : [String] = ["all"]
-    @State private var selectedCategory : String = "maison"
-    @State private var selectedTaskToDelete : Task?=nil
-    @Binding var isShowingHour : Bool
-    
+    @State private var selectedCategories: [String] = ["all"]
+    @State private var selectedCategory: String = "maison"
+    @State private var selectedTaskToDelete: Task?
+    @Binding var isShowingHour: Bool
     var body: some View {
-        ScrollView{
-            VStack{
+        ScrollView {
+            VStack {
                 VStack(alignment: .leading, spacing: 24) {
                     Text("Categories")
-                        .font(.system(size: 32,weight: .light))
+                        .font(.system(size: 32, weight: .light))
                         .foregroundColor(.black)
                     Text("Cliquez sur une catégorie pour voir les tâches👇")
-                        .foregroundColor(Color(white:0.4))
-                    CategorySelector(selectedCategories: $selectedCategories,selectedCategory: $selectedCategory, isTaskCreationScreen: .constant(false))
+                        .foregroundColor(Color(white: 0.4))
+                    CategorySelector(
+                        selectedCategories: $selectedCategories,
+                        selectedCategory: $selectedCategory,
+                        isTaskCreationScreen: .constant(false) )
                 }
                 Spacer()
                 VStack(alignment: .leading, spacing: 20) {
-                    HStack{
+                    HStack {
                         Text("Liste de tâches")
-                            .font(.system(size: 32,weight: .light))
+                            .font(.system(size: 32, weight: .light))
                             .foregroundColor(.black)
                         Spacer()
                         Circle()
@@ -43,15 +45,15 @@ struct HomeView: View {
                                     isShowingNewTaskScreen = true
                                 } label: {
                                     Image(systemName: "plus")
-                                        .font(.system(size: 20,weight: .bold))
+                                        .font(.system(size: 20, weight: .bold))
                                         .foregroundColor(Color("AccentBlue"))
                                 }
                                 .padding(.trailing)
                             }
                     }
                     Text("Vous avez actuellement \(Text("\(tasksList.tasks.count)").bold() .foregroundColor(.black)) tâches ")
-                        .foregroundColor(Color(white:0.4))
-                    ForEach (tasksList.tasks) { task in
+                        .foregroundColor(Color(white: 0.4))
+                    ForEach(tasksList.tasks) { task in
                         if selectedCategories.contains(task.category) || selectedCategories.contains("all") {
                             withAnimation {
                                 TaskCell(task: task, isShowingHour: $isShowingHour) {
@@ -81,7 +83,7 @@ struct HomeView: View {
         })
         .background(Color("lightBlue"))
         .sheet(isPresented: $isShowingNewTaskScreen) {
-            TaskCreationScreen(isShowingHour: $isShowingHour){ newTask in
+            TaskCreationScreen(isShowingHour: $isShowingHour) { newTask in
                 tasksList.tasks.append(newTask)
             }
         }

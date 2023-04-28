@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct AccentButton: View {
-    let name : String
-    let color : Color
-    let action : () -> Void
-    
+    let name: String
+    let color: Color
+    let action: () -> Void
     var body: some View {
         Button {
             action()
@@ -21,7 +20,7 @@ struct AccentButton: View {
                 .font(.headline)
                 .padding()
                 .frame(maxWidth: .infinity)
-                .padding(.horizontal,12)
+                .padding(.horizontal, 12)
                 .background(color)
                 .cornerRadius(.infinity)
                 .padding()
@@ -31,7 +30,7 @@ struct AccentButton: View {
 
 struct AccentButton_Previews: PreviewProvider {
     static var previews: some View {
-        AccentButton(name: "Ajouter", color:.black,action: {})
+        AccentButton(name: "Ajouter", color: .black, action: {})
             .previewLayout(.sizeThatFits)
     }
 }
