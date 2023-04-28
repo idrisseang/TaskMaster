@@ -26,7 +26,7 @@ struct TaskCell: View {
                         .foregroundColor(isFinishedTask ? Color("lightBlue") : Color(white:0.4))
                 }
                 Spacer()
-                VStack(spacing: 12) {
+                VStack(spacing: 12){
                     if !isFinishedTask {
                         Text(task.name)
                             .font(.headline)
@@ -59,10 +59,6 @@ struct TaskCell: View {
                         }
                     }
             }
-            Image(task.category)
-                .resizable()
-                .frame(width: 40,height: 40)
-            
         }
         if isDetailedMode && isFinishedTask {
             HStack{

@@ -14,6 +14,18 @@ struct DatePickerScreen: View {
     @State private var isOn : Bool = false
     @Binding var hide : Bool
     
+    func formatDate(date:Date,isIncludingHour : Bool) -> String{
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "fr_FR")
+        if isIncludingHour {
+            dateFormatter.dateFormat = "EEE d MMMM YYYY 'à' HH:mm"
+        } else {
+            dateFormatter.dateFormat = "EEE d MMMM YYYY"
+        }
+        let dateFormatted = dateFormatter.string(from: date)
+        return dateFormatted
+    }
+    
     var body: some View {
         VStack{
             HStack{
@@ -102,6 +114,11 @@ struct DatePickerScreen: View {
                         hide = true
                     })
                 }
+                Spacer()
+                AccentButton(name: "Valider", color: .black, action: {
+                    presentationMode.wrappedValue.dismiss()
+                    hide = true
+                })
             }
             .padding(.top)
             .background(Color("lightBlue"))

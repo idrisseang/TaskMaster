@@ -14,6 +14,7 @@ class TaskList : ObservableObject{
         self.tasks = tasks
     }
     
+
     static func save(tasks : [Task], completion : @escaping (Result<Int,Error>) -> Void) {
         DispatchQueue.global(qos: .background).async {
             do {

@@ -52,6 +52,7 @@ struct HomeView: View {
                     Text("Vous avez actuellement \(Text("\(tasksList.tasks.count)").bold() .foregroundColor(.black)) tâches ")
                         .foregroundColor(Color(white:0.4))
                     ForEach (tasksList.tasks) { task in
+                        
                         if selectedCategories.contains(task.category) || selectedCategories.contains("all") {
                             withAnimation {
                                 TaskCell(task: task, isShowingHour: $isShowingHour) {
@@ -81,7 +82,6 @@ struct HomeView: View {
         })
         .background(Color("lightBlue"))
         .sheet(isPresented: $isShowingNewTaskScreen) {
-            
             TaskCreationScreen(isShowingHour: $isShowingHour){ newTask in
                 tasksList.tasks.append(newTask)
             }

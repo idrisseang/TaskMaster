@@ -12,7 +12,20 @@ class Task : Identifiable, Codable{
     let name : String
     var date : Date?
     let category : String
-
+    
+    
+    func formatDate(date:Date,isIncludingHour : Bool) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "fr_FR")
+        if isIncludingHour {
+            dateFormatter.dateFormat = "dd/MM/yyyy 'à' HH:mm"
+        } else {
+            dateFormatter.dateFormat = "dd/MM/yyyy "
+        }
+        let dateFormatted = dateFormatter.string(from: date)
+        return dateFormatted
+    }
+    
     init(name : String , date : Date?, category : String) {
         self.name = name
         self.date = nil

@@ -46,16 +46,16 @@ struct TaskCreationScreen: View {
                     .cornerRadius(.infinity)
             }
             Spacer()
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading){
                 Text("Categorie")
                     .font(.title2)
                     .bold()
                     .foregroundColor(Color.black)
-                CategorySelector(selectedCategories: $selectedCategories, selectedCategory: $selectedCategory, isTaskCreationScreen: .constant(true))
                     .padding(-7)
+                CategorySelector(selectedCategories: $selectedCategories, selectedCategory: $selectedCategory, isTaskCreationScreen: true)
             }
             Spacer()
-            VStack(alignment : .leading) {
+            VStack(alignment : .leading){
                 Text("Date d'échéance")
                     .font(.title2)
                     .bold()
@@ -82,15 +82,10 @@ struct TaskCreationScreen: View {
                         }
                         ChooseDateHourButton(date: $taskDate, hide: $hide)
                     } else {
-                        DateChoosen(date: currentDate, isShowingHour: isShowingHour) {
+                        DateChoosen(date: $taskDate, isShowingHour: isShowingHour){
                             withAnimation {
                                 hide = false
-                                DateChoosen(date: $taskDate, isShowingHour: isShowingHour) {
-                                    withAnimation {
-                                        hide = false
-                                        taskDate = Date()
-                                    }
-                                }
+                                taskDate = Date()
                             }
                         }
                     }
