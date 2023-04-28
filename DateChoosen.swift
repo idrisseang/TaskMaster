@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct DateChoosen: View {
-    let date : Date
-    let isShowingHour : Bool
-    let onClick : () -> Void
-    
+    let date: Date
+    let isShowingHour: Bool
+    let onClick: () -> Void
     var body: some View {
-        HStack(spacing:4){
-            Text(formatDate(date:date,isIncludingHour: isShowingHour))
+        HStack(spacing: 4) {
+            Text(formatDate(date: date, isIncludingHour: isShowingHour))
                 .font(.footnote)
                 .bold()
                 .foregroundColor(.white)
@@ -39,7 +38,7 @@ struct DateChoosen: View {
 
 struct DateChoosen_Previews: PreviewProvider {
     static var previews: some View {
-        DateChoosen(date: Date(), isShowingHour: true,onClick: {})
+        DateChoosen(date: Date(), isShowingHour: true, onClick: {})
             .previewLayout(.sizeThatFits)
             .padding()
             .background(.white)

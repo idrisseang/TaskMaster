@@ -7,14 +7,12 @@
 
 import Foundation
 
-class TaskList : ObservableObject{
-    @Published var tasks : [Task]
-    
+class TaskList: ObservableObject {
+    @Published var tasks: [Task]
     init(tasks: [Task]) {
         self.tasks = tasks
     }
-    
-    static func save(tasks : [Task], completion : @escaping (Result<Int,Error>) -> Void) {
+    static func save(tasks: [Task], completion: @escaping (Result<Int, Error>) -> Void) {
         DispatchQueue.global(qos: .background).async {
             do {
                 let data = try JSONEncoder().encode(tasks)
@@ -30,8 +28,7 @@ class TaskList : ObservableObject{
             }
         }
     }
-    
-    static func load(completion : @escaping (Result<[Task],Error>) -> Void) {
+    static func load(completion: @escaping (Result<[Task], Error>) -> Void) {
         DispatchQueue.global(qos: .background).async {
             do {
                 let fileURL = try fileURL()
@@ -52,9 +49,11 @@ class TaskList : ObservableObject{
             }
         }
     }
-    
     private static func fileURL() throws -> URL {
-        let path = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+        let path = try FileManager.default.url(
+            for: .documentDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil, create: false )
         let url = path.appendingPathComponent("tasks.data")
         return url
     }
