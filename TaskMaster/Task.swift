@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Task: Identifiable, Codable {
+class Task: Identifiable, Codable, ObservableObject {
     var id = UUID()
     let name: String
     var date: Date?

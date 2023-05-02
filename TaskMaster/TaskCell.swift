@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TaskCell: View {
-    let task: Task
+    @ObservedObject var task: Task
     @State private var isFinishedTask = false
     @State private var isDetailedMode = false
     @Binding var isShowingHour: Bool
