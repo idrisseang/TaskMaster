@@ -13,6 +13,8 @@ struct TaskCell: View {
     @State private var isDetailedMode = false
     @Binding var isShowingHour: Bool
     @State private var date: Date?
+    @State private var isEditingMode = false
+    @FocusState private var focusedField: Field?
     let onDelete: () -> Void
     var body: some View {
             VStack {
