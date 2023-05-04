@@ -113,6 +113,7 @@ struct TaskCreationScreen: View {
                 AccentButton(name: "Ajouter", color: .black, action: {
                     if selectedCategory.isEmpty {
                         isShowingAlert = true
+                        selectedCategory = "all"
                     } else {
                         let newTask = Task(
                             name: taskName,
