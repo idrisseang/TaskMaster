@@ -19,6 +19,7 @@ struct TaskCreationScreen: View {
     @State private var hide: Bool = false
     @State private var isShowingAlert = false
     @Binding  var isShowingHour: Bool
+    @State private var isShowingDatePickerScreen: Bool = false
     var onTaskCreated: (Task) -> Void
     var body: some View {
         VStack(spacing: 24) {
@@ -104,7 +105,7 @@ struct TaskCreationScreen: View {
                             value: 0,
                             iconName: "calendar.badge.clock",
                             currentDate: $taskDate) {
-                                //
+                                isShowingDatePickerScreen = true
                             }
                     } else {
                         DateChoosen(date: taskDate ?? Date(), isShowingHour: isShowingHour) {
@@ -142,6 +143,9 @@ struct TaskCreationScreen: View {
         .padding()
         .background(Color("lightBlue"))
         .preferredColorScheme(.dark)
+        .sheet(isPresented: $isShowingDatePickerScreen) {
+            DatePickerScreen(date: $taskDate, hide: $hide)
+        }
     }
 }
 
