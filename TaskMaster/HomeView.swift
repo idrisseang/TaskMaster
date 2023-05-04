@@ -14,7 +14,7 @@ struct HomeView: View {
     @State private var selectedCategories: [String] = ["all"]
     @State private var selectedCategory: String = "maison"
     @State private var selectedTaskToDelete: Task?
-    @Binding var isShowingHour: Bool
+    @State private var isShowingHour: Bool = false
     var body: some View {
         ScrollView {
             VStack {
@@ -56,7 +56,7 @@ struct HomeView: View {
                     ForEach(tasksList.tasks) { task in
                         if selectedCategories.contains(task.category) || selectedCategories.contains("all") {
                             withAnimation {
-                                TaskCell(task: task, isShowingHour: $isShowingHour) {
+                                TaskCell(task: task) {
                                     selectedTaskToDelete = task
                                     withAnimation {
                                         tasksList.tasks.removeAll { taskToDelete in
@@ -102,6 +102,6 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(isShowingHour: .constant(false))
+        HomeView()
     }
 }

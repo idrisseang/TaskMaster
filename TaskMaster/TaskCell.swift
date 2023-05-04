@@ -11,7 +11,6 @@ struct TaskCell: View {
     @ObservedObject var task: Task
     @State private var isFinishedTask = false
     @State private var isDetailedMode = false
-    @Binding var isShowingHour: Bool
     @State private var date: Date?
     @State private var isEditingMode = false
     @FocusState private var focusedField: Field?
@@ -47,7 +46,7 @@ struct TaskCell: View {
                             .strikethrough(true, pattern: .solid, color: .black)
                     }
                     if task.date != nil {
-                        Text("\(formatDate(date: task.date!, isIncludingHour: isShowingHour))")
+                        Text("\(formatDate(date: task.date!, isIncludingHour: task.showingHour))")
                             .font(.system(size: 16, weight: .light))
                             .foregroundColor(Color(white: 0.4))
                     }
@@ -114,7 +113,7 @@ struct TaskCell: View {
 
 struct TaskCell_Previews: PreviewProvider {
     static var previews: some View {
-        TaskCell(task: previewTasks[0], isShowingHour: .constant(true), onDelete: {})
+        TaskCell(task: previewTasks[0], onDelete: {})
             .padding(24)
             .background(Color("lightBlue"))
             .previewLayout(.sizeThatFits)

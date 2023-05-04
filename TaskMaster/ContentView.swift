@@ -11,9 +11,10 @@ struct ContentView: View {
     @State private var isActive = false
     @State private var iconSize = 0.8
     @State private var iconOpacity = 0.5
+    @State private var isShowingHour: Bool = false
     var body: some View {
         if isActive {
-            HomeView(isShowingHour: .constant(true))
+            HomeView()
         } else {
             VStack {
                 VStack {

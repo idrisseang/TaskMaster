@@ -11,7 +11,7 @@ struct TaskCreationScreen: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
     @State private var taskName = ""
-    @State private var taskDate: Date? = Date()
+    @State private var taskDate: Date?
     @State private var currentDate = Date()
     @State private var selectedCategories: [String] = []
     @State private var selectedCategory: String = ""
@@ -19,6 +19,7 @@ struct TaskCreationScreen: View {
     @State private var hide: Bool = false
     @State private var isShowingAlert = false
     @Binding  var isShowingHour: Bool
+    @State private var isShowingDatePickerScreen: Bool = false
     var onTaskCreated: (Task) -> Void
     var body: some View {
         VStack(spacing: 24) {
@@ -70,7 +71,7 @@ struct TaskCreationScreen: View {
                             timeVariation: .day,
                             value: 0,
                             iconName: "sun.max",
-                            currentDate: $taskDate) {
+                            currentDate: $taskDate, hide: $hide) {
                                 withAnimation {
                                     hide = true
                                     isShowingHour = false
@@ -81,7 +82,7 @@ struct TaskCreationScreen: View {
                             timeVariation: .day,
                             value: 1,
                             iconName: "sunrise",
-                            currentDate: $taskDate) {
+                            currentDate: $taskDate, hide: $hide) {
                                 withAnimation {
                                     hide = true
                                     isShowingHour = false
@@ -92,19 +93,26 @@ struct TaskCreationScreen: View {
                             timeVariation: .hour,
                             value: 1,
                             iconName: "hourglass",
-                            currentDate: $taskDate) {
+                            currentDate: $taskDate, hide: $hide) {
                                 withAnimation {
                                     hide = true
                                     isShowingHour = true
                                 }
                             }
-                        ChooseDateHourButton(date: $taskDate, hide: $hide)
+                        DatePickerButton(
+                            title: "Date et Heure",
+                            timeVariation: .day,
+                            value: 0,
+                            iconName: "calendar.badge.clock",
+                            currentDate: $taskDate, hide: $hide) {
+                                isShowingDatePickerScreen = true
+                            }
                     } else {
-                        DateChoosen(date: currentDate, isShowingHour: isShowingHour) {
+                        DateChoosen(date: taskDate ?? Date(), isShowingHour: $isShowingHour) {
                             withAnimation {
                                 hide = false
-                                taskDate = Date()
                             }
+                            taskDate = Date()
                         }
                     }
                 }
@@ -118,7 +126,7 @@ struct TaskCreationScreen: View {
                         let newTask = Task(
                             name: taskName,
                             date: taskDate,
-                            category: selectedCategory.isEmpty ? "all" : selectedCategory)
+                            category: selectedCategory.isEmpty ? "all" : selectedCategory, showingHour: isShowingHour)
                         onTaskCreated(newTask)
                         presentationMode.wrappedValue.dismiss()
                     }
@@ -135,6 +143,9 @@ struct TaskCreationScreen: View {
         .padding()
         .background(Color("lightBlue"))
         .preferredColorScheme(.dark)
+        .sheet(isPresented: $isShowingDatePickerScreen) {
+            DatePickerScreen(date: $taskDate, isShowingHour: $isShowingHour, hide: $hide)
+        }
     }
 }
 

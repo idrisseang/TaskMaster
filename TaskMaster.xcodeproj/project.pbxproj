@@ -18,7 +18,6 @@
 		2C36612829E215C000540EF3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C36612729E215C000540EF3 /* HomeView.swift */; };
 		2C36612A29E2167900540EF3 /* CategorySelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C36612929E2167900540EF3 /* CategorySelector.swift */; };
 		2C42B41A29E68DF600045053 /* DateChoosen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C42B41929E68DF600045053 /* DateChoosen.swift */; };
-		2C42B41C29E6F68000045053 /* ChooseDateHourButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C42B41B29E6F68000045053 /* ChooseDateHourButton.swift */; };
 		2C42B41E29E6FAE700045053 /* DatePickerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C42B41D29E6FAE700045053 /* DatePickerScreen.swift */; };
 		2C51C03729E2B66100781DC2 /* TaskCreationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C03629E2B66100781DC2 /* TaskCreationScreen.swift */; };
 		2C9383A329E2D8F1002081FC /* AccentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9383A229E2D8F1002081FC /* AccentButton.swift */; };
@@ -40,7 +39,6 @@
 		2C36612729E215C000540EF3 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		2C36612929E2167900540EF3 /* CategorySelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelector.swift; sourceTree = "<group>"; };
 		2C42B41929E68DF600045053 /* DateChoosen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateChoosen.swift; sourceTree = "<group>"; };
-		2C42B41B29E6F68000045053 /* ChooseDateHourButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseDateHourButton.swift; sourceTree = "<group>"; };
 		2C42B41D29E6FAE700045053 /* DatePickerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerScreen.swift; sourceTree = "<group>"; };
 		2C51C03629E2B66100781DC2 /* TaskCreationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreationScreen.swift; sourceTree = "<group>"; };
 		2C9383A229E2D8F1002081FC /* AccentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentButton.swift; sourceTree = "<group>"; };
@@ -66,7 +64,6 @@
 				2C51C03629E2B66100781DC2 /* TaskCreationScreen.swift */,
 				2C42B41929E68DF600045053 /* DateChoosen.swift */,
 				2C9383A829E59003002081FC /* DatePickerButton.swift */,
-				2C42B41B29E6F68000045053 /* ChooseDateHourButton.swift */,
 				2C42B41D29E6FAE700045053 /* DatePickerScreen.swift */,
 				2C9383A429E2E3B5002081FC /* TaskList.swift */,
 				2C9383A229E2D8F1002081FC /* AccentButton.swift */,
@@ -217,7 +214,6 @@
 				2C42B41A29E68DF600045053 /* DateChoosen.swift in Sources */,
 				2C36612A29E2167900540EF3 /* CategorySelector.swift in Sources */,
 				2C36612429E2044A00540EF3 /* previewData.swift in Sources */,
-				2C42B41C29E6F68000045053 /* ChooseDateHourButton.swift in Sources */,
 				2C36612829E215C000540EF3 /* HomeView.swift in Sources */,
 				2C36611429E2032800540EF3 /* ContentView.swift in Sources */,
 				2C9383A329E2D8F1002081FC /* AccentButton.swift in Sources */,
