@@ -11,7 +11,7 @@ struct TaskCreationScreen: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
     @State private var taskName = ""
-    @State private var taskDate: Date? = Date()
+    @State private var taskDate: Date?
     @State private var currentDate = Date()
     @State private var selectedCategories: [String] = []
     @State private var selectedCategory: String = ""
@@ -71,7 +71,7 @@ struct TaskCreationScreen: View {
                             timeVariation: .day,
                             value: 0,
                             iconName: "sun.max",
-                            currentDate: $taskDate) {
+                            currentDate: $taskDate, hide: $hide) {
                                 withAnimation {
                                     hide = true
                                     isShowingHour = false
@@ -82,7 +82,7 @@ struct TaskCreationScreen: View {
                             timeVariation: .day,
                             value: 1,
                             iconName: "sunrise",
-                            currentDate: $taskDate) {
+                            currentDate: $taskDate, hide: $hide) {
                                 withAnimation {
                                     hide = true
                                     isShowingHour = false
@@ -93,7 +93,7 @@ struct TaskCreationScreen: View {
                             timeVariation: .hour,
                             value: 1,
                             iconName: "hourglass",
-                            currentDate: $taskDate) {
+                            currentDate: $taskDate, hide: $hide) {
                                 withAnimation {
                                     hide = true
                                     isShowingHour = true
@@ -104,11 +104,11 @@ struct TaskCreationScreen: View {
                             timeVariation: .day,
                             value: 0,
                             iconName: "calendar.badge.clock",
-                            currentDate: $taskDate) {
+                            currentDate: $taskDate, hide: $hide) {
                                 isShowingDatePickerScreen = true
                             }
                     } else {
-                        DateChoosen(date: taskDate ?? Date(), isShowingHour: isShowingHour) {
+                        DateChoosen(date: taskDate ?? Date(), isShowingHour: $isShowingHour) {
                             withAnimation {
                                 hide = false
                             }
@@ -126,7 +126,7 @@ struct TaskCreationScreen: View {
                         let newTask = Task(
                             name: taskName,
                             date: taskDate,
-                            category: selectedCategory.isEmpty ? "all" : selectedCategory)
+                            category: selectedCategory.isEmpty ? "all" : selectedCategory, showingHour: isShowingHour)
                         onTaskCreated(newTask)
                         presentationMode.wrappedValue.dismiss()
                     }
@@ -144,7 +144,7 @@ struct TaskCreationScreen: View {
         .background(Color("lightBlue"))
         .preferredColorScheme(.dark)
         .sheet(isPresented: $isShowingDatePickerScreen) {
-            DatePickerScreen(date: $taskDate, hide: $hide)
+            DatePickerScreen(date: $taskDate, isShowingHour: $isShowingHour, hide: $hide)
         }
     }
 }
