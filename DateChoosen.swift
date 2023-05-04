@@ -11,6 +11,7 @@ struct DateChoosen: View {
     let date: Date
     @Binding var isShowingHour: Bool
     let onClick: () -> Void
+
     var body: some View {
         HStack(spacing: 4) {
             Text(formatDate(date: date, isIncludingHour: isShowingHour))

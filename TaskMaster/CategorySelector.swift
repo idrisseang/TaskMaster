@@ -12,6 +12,7 @@ struct CategorySelector: View {
     @Binding var selectedCategories: [String]
     @Binding var selectedCategory: String
     @Binding var isTaskCreationScreen: Bool
+
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
@@ -52,8 +53,8 @@ struct CategorySelector_Previews: PreviewProvider {
             selectedCategories: $previewSelectedCategories,
             selectedCategory: $previewSelectedCategory,
             isTaskCreationScreen: .constant(true) )
-            .padding(.vertical)
-            .background(Color("lightBlue"))
-            .previewLayout(.sizeThatFits)
+        .padding(.vertical)
+        .background(Color("lightBlue"))
+        .previewLayout(.sizeThatFits)
     }
 }

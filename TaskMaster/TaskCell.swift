@@ -13,8 +13,11 @@ struct TaskCell: View {
     @State private var isDetailedMode = false
     @State private var date: Date?
     @State private var isEditingMode = false
+    @State private var isShowingDatePickerScreen = false
+    @State private var hide = false
     @FocusState private var focusedField: Field?
     let onDelete: () -> Void
+
     var body: some View {
         VStack {
             HStack {
@@ -46,7 +49,7 @@ struct TaskCell: View {
                             .strikethrough(true, pattern: .solid, color: .black)
                     }
                     if task.date != nil {
-                        Text("\(formatDate(date: task.date!, isIncludingHour: task.showingHour))")
+                        Text("\(formatDate(date: (hide ? date : task.date)!, isIncludingHour: task.showingHour))")
                             .font(.system(size: 16, weight: .light))
                             .foregroundColor(Color(white: 0.4))
                     }
@@ -86,7 +89,7 @@ struct TaskCell: View {
                     }
                     .frame(maxWidth: .infinity)
                     Button {
-                        //
+                        isShowingDatePickerScreen = true
                     } label: {
                         Text("Changer date")
                     }
@@ -104,8 +107,11 @@ struct TaskCell: View {
                 isDetailedMode.toggle()
             }
         }
+        .sheet(isPresented: $isShowingDatePickerScreen) {
+            DatePickerScreen(date: $date, isShowingHour: $task.showingHour, hide: $hide)
+        }
     }
-    
+
     private enum Field: Int, Hashable {
         case taskName
     }

@@ -11,6 +11,7 @@ struct AccentButton: View {
     let name: String
     let color: Color
     let action: () -> Void
+
     var body: some View {
         Button {
             action()

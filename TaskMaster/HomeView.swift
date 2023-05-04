@@ -15,6 +15,7 @@ struct HomeView: View {
     @State private var selectedCategory: String = "maison"
     @State private var selectedTaskToDelete: Task?
     @State private var isShowingHour: Bool = false
+
     var body: some View {
         ScrollView {
             VStack {
@@ -51,7 +52,7 @@ struct HomeView: View {
                                 .padding(.trailing)
                             }
                     }
-                    Text("Vous avez actuellement \(Text("\(tasksList.tasks.count)").bold() .foregroundColor(.black)) tâches ")
+                    Text("Vous avez actuellement \(Text("\(tasksList.tasks.count)") .foregroundColor(.black)) tâches ")
                         .foregroundColor(Color(white: 0.4))
                     ForEach(tasksList.tasks) { task in
                         if selectedCategories.contains(task.category) || selectedCategories.contains("all") {
