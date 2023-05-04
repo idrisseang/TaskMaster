@@ -15,7 +15,7 @@ class Task: Identifiable, Codable, ObservableObject {
     
     init(name: String, date: Date?, category: String) {
         self.name = name
-        self.date = nil
+        self.date = date
         self.category = category
     }
     
