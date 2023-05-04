@@ -100,11 +100,11 @@ struct TaskCreationScreen: View {
                             }
                         ChooseDateHourButton(date: $taskDate, hide: $hide)
                     } else {
-                        DateChoosen(date: currentDate, isShowingHour: isShowingHour) {
+                        DateChoosen(date: taskDate ?? Date(), isShowingHour: isShowingHour) {
                             withAnimation {
                                 hide = false
-                                taskDate = Date()
                             }
+                            taskDate = Date()
                         }
                     }
                 }
