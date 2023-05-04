@@ -13,6 +13,7 @@ struct DatePickerScreen: View {
     @FocusState private var isFocused: Bool
     @Binding var isShowingHour: Bool
     @Binding var hide: Bool
+
     var body: some View {
         VStack {
             HStack {
@@ -46,23 +47,23 @@ struct DatePickerScreen: View {
                         "",
                         selection: Binding<Date>(get: { unwrappedDate }, set: { date = $0 }),
                         displayedComponents: .date )
-                        .environment(\.locale, Locale(identifier: "fr_FR"))
-                        .datePickerStyle(GraphicalDatePickerStyle())
-                        .accentColor(.black)
-                        .colorScheme(.dark)
-                        .colorInvert()
-                        .colorMultiply(Color("AccentBlue"))
+                    .environment(\.locale, Locale(identifier: "fr_FR"))
+                    .datePickerStyle(GraphicalDatePickerStyle())
+                    .accentColor(.black)
+                    .colorScheme(.dark)
+                    .colorInvert()
+                    .colorMultiply(Color("AccentBlue"))
                 } else {
                     DatePicker(
                         "",
                         selection: Binding<Date>(get: { Date() }, set: { date = $0 }),
                         displayedComponents: .date )
-                        .environment(\.locale, Locale(identifier: "fr_FR"))
-                        .datePickerStyle(GraphicalDatePickerStyle())
-                        .accentColor(.black)
-                        .colorScheme(.dark)
-                        .colorInvert()
-                        .colorMultiply(Color("AccentBlue"))
+                    .environment(\.locale, Locale(identifier: "fr_FR"))
+                    .datePickerStyle(GraphicalDatePickerStyle())
+                    .accentColor(.black)
+                    .colorScheme(.dark)
+                    .colorInvert()
+                    .colorMultiply(Color("AccentBlue"))
                 }
                 Divider()
                     .foregroundColor(Color(white: 0.4))
@@ -86,25 +87,25 @@ struct DatePickerScreen: View {
                                 "",
                                 selection: Binding<Date>(get: { unwrappedDate }, set: { date = $0 }),
                                 displayedComponents: .hourAndMinute )
-                                .datePickerStyle(.wheel)
-                                .environment(\.locale, Locale(identifier: "fr_FR"))
-                                .frame(width: 375, height: 190)
-                                .accentColor(.black)
-                                .colorScheme(.dark)
-                                .colorInvert()
-                                .colorMultiply(Color("AccentBlue"))
+                            .datePickerStyle(.wheel)
+                            .environment(\.locale, Locale(identifier: "fr_FR"))
+                            .frame(width: 375, height: 190)
+                            .accentColor(.black)
+                            .colorScheme(.dark)
+                            .colorInvert()
+                            .colorMultiply(Color("AccentBlue"))
                         } else {
                             DatePicker(
                                 "",
                                 selection: Binding<Date>(get: { Date() }, set: { date = $0 }),
                                 displayedComponents: .hourAndMinute )
-                                .datePickerStyle(.wheel)
-                                .environment(\.locale, Locale(identifier: "fr_FR"))
-                                .frame(width: 375, height: 190)
-                                .accentColor(.black)
-                                .colorScheme(.dark)
-                                .colorInvert()
-                                .colorMultiply(Color("AccentBlue"))
+                            .datePickerStyle(.wheel)
+                            .environment(\.locale, Locale(identifier: "fr_FR"))
+                            .frame(width: 375, height: 190)
+                            .accentColor(.black)
+                            .colorScheme(.dark)
+                            .colorInvert()
+                            .colorMultiply(Color("AccentBlue"))
                         }
                     }
                 }

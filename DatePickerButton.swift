@@ -15,6 +15,7 @@ struct DatePickerButton: View {
     @Binding var currentDate: Date?
     @Binding var hide: Bool
     let onClick: () -> Void
+
     var body: some View {
         Button {
             let calendar = Calendar.current
@@ -46,7 +47,7 @@ struct DatePickerButton_Previews: PreviewProvider {
             value: 1, iconName: "sunrise",
             currentDate: .constant(Date()), hide: .constant(true),
             onClick: {})
-            .previewLayout(.sizeThatFits)
-            .padding()
+        .previewLayout(.sizeThatFits)
+        .padding()
     }
 }

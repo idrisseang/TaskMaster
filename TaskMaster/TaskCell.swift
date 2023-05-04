@@ -17,6 +17,7 @@ struct TaskCell: View {
     @State private var hide = false
     @FocusState private var focusedField: Field?
     let onDelete: () -> Void
+
     var body: some View {
         VStack {
             HStack {
