@@ -17,6 +17,7 @@ struct TaskCreationScreen: View {
     @State private var selectedCategory: String = ""
     @State private var isInSelectionMode: Bool = true
     @State private var hide: Bool = false
+    @State private var isShowingAlert = false
     @Binding  var isShowingHour: Bool
     var onTaskCreated: (Task) -> Void
     var body: some View {
@@ -70,33 +71,33 @@ struct TaskCreationScreen: View {
                             value: 0,
                             iconName: "sun.max",
                             currentDate: $taskDate) {
-                            withAnimation {
-                                hide = true
-                                isShowingHour = false
+                                withAnimation {
+                                    hide = true
+                                    isShowingHour = false
+                                }
                             }
-                        }
                         DatePickerButton(
                             title: "Demain",
                             timeVariation: .day,
                             value: 1,
                             iconName: "sunrise",
                             currentDate: $taskDate) {
-                            withAnimation {
-                                hide = true
-                                isShowingHour = false
+                                withAnimation {
+                                    hide = true
+                                    isShowingHour = false
+                                }
                             }
-                        }
                         DatePickerButton(
                             title: "Dans 1h",
                             timeVariation: .hour,
                             value: 1,
                             iconName: "hourglass",
                             currentDate: $taskDate) {
-                            withAnimation {
-                                hide = true
-                                isShowingHour = true
+                                withAnimation {
+                                    hide = true
+                                    isShowingHour = true
+                                }
                             }
-                        }
                         ChooseDateHourButton(date: $taskDate, hide: $hide)
                     } else {
                         DateChoosen(date: currentDate, isShowingHour: isShowingHour) {
@@ -108,12 +109,26 @@ struct TaskCreationScreen: View {
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                    Spacer()
-                    AccentButton(name: "Ajouter", color: .black, action: {
-                        let newTask = Task(name: taskName, date: taskDate, category: selectedCategory)
+                Spacer()
+                AccentButton(name: "Ajouter", color: .black, action: {
+                    if selectedCategory.isEmpty {
+                        isShowingAlert = true
+                    } else {
+                        let newTask = Task(
+                            name: taskName,
+                            date: taskDate,
+                            category: selectedCategory.isEmpty ? "all" : selectedCategory)
                         onTaskCreated(newTask)
                         presentationMode.wrappedValue.dismiss()
-                    })
+                    }
+                })
+            }
+            .alert(isPresented: $isShowingAlert) {
+                Alert(
+                    title: Text("Hé attends... ⚠️ "),
+                    message: Text("Tu n'as choisi aucune catégorie pour ta tâche. La catégorie par défaut sera All."),
+                    dismissButton: .default(Text("OK"))
+                )
             }
         }
         .padding()
