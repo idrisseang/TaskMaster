@@ -106,11 +106,6 @@ struct DatePickerScreen: View {
                                 .colorMultiply(Color("AccentBlue"))
                         }
                     }
-                    Spacer()
-                    AccentButton(name: "Valider", color: .black, action: {
-                        presentationMode.wrappedValue.dismiss()
-                        hide = true
-                    })
                 }
                 Spacer()
                 AccentButton(name: "Valider", color: .black, action: {
@@ -118,9 +113,9 @@ struct DatePickerScreen: View {
                     hide = true
                 })
             }
-            .padding(.top)
-            .background(Color("lightBlue"))
         }
+        .padding(.top)
+        .background(Color("lightBlue"))
     }
 }
 
