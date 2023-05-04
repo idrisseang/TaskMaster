@@ -13,6 +13,8 @@ struct TaskCell: View {
     @State private var isDetailedMode = false
     @State private var date: Date?
     @State private var isEditingMode = false
+    @State private var isShowingDatePickerScreen = false
+    @State private var hide = false
     @FocusState private var focusedField: Field?
     let onDelete: () -> Void
     var body: some View {
@@ -86,7 +88,7 @@ struct TaskCell: View {
                     }
                     .frame(maxWidth: .infinity)
                     Button {
-                        //
+                        isShowingDatePickerScreen = true
                     } label: {
                         Text("Changer date")
                     }
@@ -104,8 +106,11 @@ struct TaskCell: View {
                 isDetailedMode.toggle()
             }
         }
+        .sheet(isPresented: $isShowingDatePickerScreen) {
+            DatePickerScreen(date: $date, isShowingHour: $task.showingHour, hide: $hide)
+        }
     }
-    
+
     private enum Field: Int, Hashable {
         case taskName
     }
