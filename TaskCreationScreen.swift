@@ -98,7 +98,14 @@ struct TaskCreationScreen: View {
                                     isShowingHour = true
                                 }
                             }
-                        ChooseDateHourButton(date: $taskDate, hide: $hide)
+                        DatePickerButton(
+                            title: "Date et Heure",
+                            timeVariation: .day,
+                            value: 0,
+                            iconName: "calendar.badge.clock",
+                            currentDate: $taskDate) {
+                                //
+                            }
                     } else {
                         DateChoosen(date: taskDate ?? Date(), isShowingHour: isShowingHour) {
                             withAnimation {
