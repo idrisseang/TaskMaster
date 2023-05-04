@@ -48,7 +48,7 @@ struct TaskCell: View {
                             .strikethrough(true, pattern: .solid, color: .black)
                     }
                     if task.date != nil {
-                        Text("\(formatDate(date: task.date!, isIncludingHour: task.showingHour))")
+                        Text("\(formatDate(date: (hide ? date : task.date)!, isIncludingHour: task.showingHour))")
                             .font(.system(size: 16, weight: .light))
                             .foregroundColor(Color(white: 0.4))
                     }
