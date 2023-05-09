@@ -53,6 +53,14 @@ struct TaskCell: View {
                             .font(.system(size: 16, weight: .light))
                             .foregroundColor(Color(white: 0.4))
                     }
+                    HStack {
+                        Image(systemName: "list.bullet.indent")
+                            .font(.callout)
+                            .foregroundColor(Color(white: 0.4))
+                        Text("\(task.subtasks.count)")
+                            .font(.callout)
+                            .foregroundColor(Color(white: 0.4))
+                    }
                 }
                 .padding()
                 Spacer()

@@ -8,13 +8,22 @@
 import SwiftUI
 
 struct TaskDetailView: View {
-    @ObservedObject var task: Task
+    let task: Task
+    @State private var isShowingSubtaskCreationScreen = false
 
     var body: some View {
         VStack(alignment: .leading) {
             taskHeader
-            subtasksList
+            VStack(alignment: .leading) {
+                subtasksList
+                addSubtaskButton
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
+        .sheet(isPresented: $isShowingSubtaskCreationScreen, content: {
+            SubtaskCreationView(task: task)
+                .presentationDetents([.height(200)])
+        })
         .padding(.top)
         .padding()
         .background(Color("lightBlue"))
@@ -27,6 +36,7 @@ struct TaskDetailView: View {
                     .foregroundColor(Color("AccentBlue"))
                 Text(task.name)
                     .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(.black)
             }
             Divider()
             HStack {
@@ -35,6 +45,7 @@ struct TaskDetailView: View {
                     .foregroundColor(Color("AccentBlue"))
                 Text(formatDate(date: task.date ?? Date(), isIncludingHour: false))
                     .font(.system(size: 18))
+                    .foregroundColor(.black)
             }
             Divider()
         }
@@ -42,23 +53,43 @@ struct TaskDetailView: View {
     }
 
     @ViewBuilder private var subtasksList: some View {
-        VStack(alignment: .leading) {
             Text("Sous-tâches")
                 .font(.system(size: 20, weight: .bold))
+                .foregroundColor(.black)
                 .padding(.bottom, 10)
-            HStack {
-                Button {
-                    //
-                } label: {
-                    Image(systemName: "plus")
-                        .font(.system(size: 20, weight: .semibold))
-                    Text("Ajouter une sous-tâche")
-                        .font(.system(size: 20, weight: .semibold))
+            if !task.subtasks.isEmpty {
+                ForEach(task.subtasks) {subtask in
+                    HStack {
+                        Button {
+                            //
+                        } label: {
+                            Image(systemName: "circle.circle")
+                                .foregroundColor(Color("AccentBlue"))
+                                .font(.system(size: 24))
+                        }
+                        Text(subtask.name)
+                            .foregroundColor(.black)
+                            .font(.system(size: 20))
+                            .padding()
+                    }
+                    Divider()
                 }
-                .foregroundColor(Color("AccentBlue"))
             }
+    }
+
+    @ViewBuilder private var addSubtaskButton: some View {
+        HStack {
+            Button {
+                isShowingSubtaskCreationScreen = true
+            } label: {
+                Image(systemName: "plus")
+                    .font(.system(size: 20, weight: .semibold))
+                Text("Ajouter une sous-tâche")
+                    .font(.system(size: 20, weight: .semibold))
+            }
+            .foregroundColor(Color("AccentBlue"))
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .padding(.top)
     }
 }
 

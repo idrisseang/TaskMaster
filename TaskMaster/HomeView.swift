@@ -57,19 +57,19 @@ struct HomeView: View {
                             .foregroundColor(Color(white: 0.4))
                         ForEach(tasksList.tasks) { task in
                             if selectedCategories.contains(task.category) || selectedCategories.contains("all") {
-                                    NavigationLink {
-                                        TaskDetailView(task: task)
-                                    } label: {
-                                        TaskCell(task: task) {
-                                            selectedTaskToDelete = task
-                                            withAnimation {
-                                                tasksList.tasks.removeAll { taskToDelete in
-                                                    taskToDelete.id == selectedTaskToDelete!.id
-                                                }
+                                NavigationLink {
+                                    TaskDetailView(task: task)
+                                } label: {
+                                    TaskCell(task: task) {
+                                        selectedTaskToDelete = task
+                                        withAnimation {
+                                            tasksList.tasks.removeAll { taskToDelete in
+                                                taskToDelete.id == selectedTaskToDelete!.id
                                             }
-                                            selectedTaskToDelete = nil
                                         }
+                                        selectedTaskToDelete = nil
                                     }
+                                }
                             }
                         }
                     }

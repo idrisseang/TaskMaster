@@ -13,12 +13,14 @@ class Task: TaskProtocol, ObservableObject {
     var date: Date?
     var category: String
     var showingHour: Bool
+    var subtasks: [Subtask]
 
-    init(name: String, date: Date? = nil, category: String, showingHour: Bool) {
+    init(name: String, date: Date? = nil, category: String, showingHour: Bool, subtasks: [Subtask]) {
         self.name = name
         self.date = date
         self.category = category
         self.showingHour = showingHour
+        self.subtasks = subtasks
     }
 
     enum CodingKeys: CodingKey {
@@ -27,6 +29,7 @@ class Task: TaskProtocol, ObservableObject {
         case date
         case category
         case showingHour
+        case subtasks
     }
 
     required init (from decoder: Decoder) throws {
@@ -36,6 +39,7 @@ class Task: TaskProtocol, ObservableObject {
         self.date = try container.decode(Date.self, forKey: .date)
         self.category = try container.decode(String.self, forKey: .category)
         self.showingHour = try container.decode(Bool.self, forKey: .showingHour)
+        self.subtasks = try container.decode([Subtask].self, forKey: .subtasks)
     }
 
     func encode(to encoder: Encoder) throws {
@@ -45,5 +49,6 @@ class Task: TaskProtocol, ObservableObject {
         try container.encode(date, forKey: .date)
         try container.encode(category, forKey: .category)
         try container.encode(showingHour, forKey: .showingHour)
+        try container.encode(subtasks, forKey: .subtasks)
     }
 }
