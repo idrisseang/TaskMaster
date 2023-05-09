@@ -17,61 +17,66 @@ struct HomeView: View {
     @State private var isShowingHour: Bool = false
 
     var body: some View {
-        ScrollView {
-            VStack {
-                VStack(alignment: .leading, spacing: 24) {
-                    Text("Categories")
-                        .font(.system(size: 32, weight: .light))
-                        .foregroundColor(.black)
-                    Text("Cliquez sur une catégorie pour voir les tâches👇")
-                        .foregroundColor(Color(white: 0.4))
-                    CategorySelector(
-                        selectedCategories: $selectedCategories,
-                        selectedCategory: $selectedCategory,
-                        isTaskCreationScreen: .constant(false) )
-                }
-                Spacer()
-                VStack(alignment: .leading, spacing: 20) {
-                    HStack {
-                        Text("Liste de tâches")
+        NavigationView {
+            ScrollView {
+                VStack {
+                    VStack(alignment: .leading, spacing: 24) {
+                        Text("Categories")
                             .font(.system(size: 32, weight: .light))
                             .foregroundColor(.black)
-                        Spacer()
-                        Circle()
-                            .foregroundColor(.white)
-                            .frame(width: 50, height: 50)
-                            .padding(.trailing)
-                            .overlay {
-                                Button {
-                                    isShowingNewTaskScreen = true
-                                } label: {
-                                    Image(systemName: "plus")
-                                        .font(.system(size: 20, weight: .bold))
-                                        .foregroundColor(Color("AccentBlue"))
-                                }
-                                .padding(.trailing)
-                            }
+                        Text("Cliquez sur une catégorie pour voir les tâches👇")
+                            .foregroundColor(Color(white: 0.4))
+                        CategorySelector(
+                            selectedCategories: $selectedCategories,
+                            selectedCategory: $selectedCategory,
+                            isTaskCreationScreen: .constant(false) )
                     }
-                    Text("Vous avez actuellement \(Text("\(tasksList.tasks.count)") .foregroundColor(.black)) tâches ")
-                        .foregroundColor(Color(white: 0.4))
-                    ForEach(tasksList.tasks) { task in
-                        if selectedCategories.contains(task.category) || selectedCategories.contains("all") {
-                            withAnimation {
-                                TaskCell(task: task) {
-                                    selectedTaskToDelete = task
-                                    withAnimation {
-                                        tasksList.tasks.removeAll { taskToDelete in
-                                            taskToDelete.id == selectedTaskToDelete!.id
+                    Spacer()
+                    VStack(alignment: .leading, spacing: 20) {
+                        HStack {
+                            Text("Liste de tâches")
+                                .font(.system(size: 32, weight: .light))
+                                .foregroundColor(.black)
+                            Spacer()
+                            Circle()
+                                .foregroundColor(.white)
+                                .frame(width: 50, height: 50)
+                                .padding(.trailing)
+                                .overlay {
+                                    Button {
+                                        isShowingNewTaskScreen = true
+                                    } label: {
+                                        Image(systemName: "plus")
+                                            .font(.system(size: 20, weight: .bold))
+                                            .foregroundColor(Color("AccentBlue"))
+                                    }
+                                    .padding(.trailing)
+                                }
+                        }
+                        Text("Vous avez actuellement \(Text("\(tasksList.tasks.count)") .foregroundColor(.black)) tâches ")
+                            .foregroundColor(Color(white: 0.4))
+                        ForEach(tasksList.tasks) { task in
+                            if selectedCategories.contains(task.category) || selectedCategories.contains("all") {
+                                    NavigationLink {
+                                        TaskDetailView(task: task)
+                                    } label: {
+                                        TaskCell(task: task) {
+                                            selectedTaskToDelete = task
+                                            withAnimation {
+                                                tasksList.tasks.removeAll { taskToDelete in
+                                                    taskToDelete.id == selectedTaskToDelete!.id
+                                                }
+                                            }
+                                            selectedTaskToDelete = nil
                                         }
                                     }
-                                    selectedTaskToDelete = nil
-                                }
                             }
                         }
                     }
                 }
             }
             .padding()
+            .background(Color("lightBlue"))
         }
         .onChange(of: scenePhase, perform: { phase in
             if phase == .inactive {
@@ -82,7 +87,6 @@ struct HomeView: View {
                 }
             }
         })
-        .background(Color("lightBlue"))
         .sheet(isPresented: $isShowingNewTaskScreen) {
             TaskCreationScreen(isShowingHour: $isShowingHour) { newTask in
                 tasksList.tasks.append(newTask)

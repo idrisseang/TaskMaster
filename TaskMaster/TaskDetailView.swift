@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TaskDetailView: View {
+    @ObservedObject var task: Task
+
     var body: some View {
         VStack(alignment: .leading) {
             taskHeader
@@ -23,7 +25,7 @@ struct TaskDetailView: View {
                 Image(systemName: "circle.circle")
                     .font(.system(size: 20))
                     .foregroundColor(Color("AccentBlue"))
-                Text("Ranger mes affaires")
+                Text(task.name)
                     .font(.system(size: 20, weight: .bold))
             }
             Divider()
@@ -31,7 +33,7 @@ struct TaskDetailView: View {
                 Image(systemName: "calendar")
                     .font(.system(size: 20))
                     .foregroundColor(Color("AccentBlue"))
-                Text(formatDate(date: .now, isIncludingHour: false))
+                Text(formatDate(date: task.date ?? Date(), isIncludingHour: false))
                     .font(.system(size: 18))
             }
             Divider()
@@ -62,6 +64,6 @@ struct TaskDetailView: View {
 
 struct TaskDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskDetailView()
+        TaskDetailView(task: previewTasks[0])
     }
 }

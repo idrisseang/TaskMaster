@@ -102,11 +102,6 @@ struct TaskCell: View {
         .padding(.horizontal, 12)
         .background(.white)
         .cornerRadius(32)
-        .onTapGesture {
-            withAnimation {
-                isDetailedMode.toggle()
-            }
-        }
         .sheet(isPresented: $isShowingDatePickerScreen) {
             DatePickerScreen(date: $date, isShowingHour: $task.showingHour, hide: $hide)
         }
