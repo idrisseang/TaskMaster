@@ -7,14 +7,14 @@
 
 import Foundation
 
-class Task: Identifiable, Codable, ObservableObject {
-    var id = UUID()
+class Task: TaskProtocol, ObservableObject {
+    var id: UUID = UUID()
     var name: String
     var date: Date?
-    let category: String
+    var category: String
     var showingHour: Bool
 
-    init(name: String, date: Date?, category: String, showingHour: Bool) {
+    init(name: String, date: Date? = nil, category: String, showingHour: Bool) {
         self.name = name
         self.date = date
         self.category = category
