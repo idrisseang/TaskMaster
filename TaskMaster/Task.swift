@@ -14,13 +14,16 @@ class Task: TaskProtocol, ObservableObject {
     var category: String
     var showingHour: Bool
     var subtasks: [Subtask]
+    @Published var isFinished: Bool
 
-    init(name: String, date: Date? = nil, category: String, showingHour: Bool, subtasks: [Subtask]) {
+    init(name: String, date: Date? = nil, category: String, showingHour: Bool, subtasks: [Subtask],
+         isFinished: Bool = false) {
         self.name = name
         self.date = date
         self.category = category
         self.showingHour = showingHour
         self.subtasks = subtasks
+        self.isFinished = isFinished
     }
 
     enum CodingKeys: CodingKey {
@@ -30,6 +33,7 @@ class Task: TaskProtocol, ObservableObject {
         case category
         case showingHour
         case subtasks
+        case isFinished
     }
 
     required init (from decoder: Decoder) throws {
@@ -40,6 +44,7 @@ class Task: TaskProtocol, ObservableObject {
         self.category = try container.decode(String.self, forKey: .category)
         self.showingHour = try container.decode(Bool.self, forKey: .showingHour)
         self.subtasks = try container.decode([Subtask].self, forKey: .subtasks)
+        self.isFinished = try container.decode(Bool.self, forKey: .isFinished)
     }
 
     func encode(to encoder: Encoder) throws {
@@ -50,5 +55,6 @@ class Task: TaskProtocol, ObservableObject {
         try container.encode(category, forKey: .category)
         try container.encode(showingHour, forKey: .showingHour)
         try container.encode(subtasks, forKey: .subtasks)
+        try container.encode(isFinished, forKey: .isFinished)
     }
 }
