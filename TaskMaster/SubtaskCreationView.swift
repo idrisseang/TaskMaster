@@ -9,6 +9,12 @@ import SwiftUI
 
 struct SubtaskCreationView: View {
     @State private var subtaskName: String = ""
+    @State private var subtaskDate: Date?
+    @State private var currentDate = Date()
+    @State private var isInSelectionMode: Bool = true
+    @State private var hide: Bool = false
+    @State private var isShowingDatePickerScreen: Bool = false
+    @State private var isShowingHour = false
     @Environment (\.presentationMode) var presentationMode
     let task: Task
     @FocusState private var focusedField: Field?
@@ -18,6 +24,60 @@ struct SubtaskCreationView: View {
                 .font(.system(size: 24))
                 .padding()
                 .focused($focusedField, equals: .subtaskName)
+                .padding(.bottom)
+            HStack {
+                if isInSelectionMode && !hide {
+                    DatePickerButton(
+                        title: "Aujourd'hui",
+                        timeVariation: .day,
+                        value: 0,
+                        iconName: "sun.max",
+                        currentDate: $subtaskDate, hide: $hide) {
+                            withAnimation {
+                                hide = true
+                                isShowingHour = false
+                            }
+                        }
+                    DatePickerButton(
+                        title: "Demain",
+                        timeVariation: .day,
+                        value: 1,
+                        iconName: "sunrise",
+                        currentDate: $subtaskDate, hide: $hide) {
+                            withAnimation {
+                                hide = true
+                                isShowingHour = false
+                            }
+                        }
+                    DatePickerButton(
+                        title: "Dans 1h",
+                        timeVariation: .hour,
+                        value: 1,
+                        iconName: "hourglass",
+                        currentDate: $subtaskDate, hide: $hide) {
+                            withAnimation {
+                                hide = true
+                                isShowingHour = true
+                            }
+                        }
+                    DatePickerButton(
+                        title: "Date et Heure",
+                        timeVariation: .day,
+                        value: 0,
+                        iconName: "calendar.badge.clock",
+                        currentDate: $subtaskDate, hide: $hide) {
+                            isShowingDatePickerScreen = true
+                        }
+                } else {
+                    DateChoosen(date: subtaskDate ?? Date(), isShowingHour: $isShowingHour) {
+                        withAnimation {
+                            hide = false
+                        }
+                        subtaskDate = Date()
+                    }
+                }
+            }
+            .padding(.leading)
             Divider()
             HStack {
                 Circle()
@@ -49,6 +109,9 @@ struct SubtaskCreationView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .onAppear {
             focusedField = .subtaskName
+        }
+        .sheet(isPresented: $isShowingDatePickerScreen) {
+            DatePickerScreen(date: $subtaskDate, isShowingHour: $isShowingHour, hide: $hide)
         }
     }
     private enum Field: Int, Hashable {
