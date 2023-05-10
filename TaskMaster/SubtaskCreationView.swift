@@ -20,9 +20,15 @@ struct SubtaskCreationView: View {
                 .focused($focusedField, equals: .subtaskName)
             Divider()
             HStack {
-                Text("Catégorie")
-                    .font(.headline)
+                Circle()
+                    .frame(width: 50, height: 50)
                     .foregroundColor(Color("AccentBlue"))
+                    .opacity(0.8)
+                    .overlay {
+                        Image(task.category)
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                    }
                 Spacer()
                 Button {
                     if !subtaskName.isEmpty {
@@ -33,7 +39,7 @@ struct SubtaskCreationView: View {
                 } label: {
                     Image(systemName: "arrow.up.circle.fill")
                         .foregroundColor(Color("AccentBlue"))
-                        .font(.system(size: 28))
+                        .font(.system(size: 40))
                         .opacity(subtaskName.isEmpty ? 0.5 : 1)
                 }
             }
