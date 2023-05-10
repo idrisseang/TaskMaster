@@ -13,7 +13,7 @@ class Task: TaskProtocol, ObservableObject {
     var date: Date?
     var category: String
     var showingHour: Bool
-    var subtasks: [Subtask]
+    @Published var subtasks: [Subtask]
     @Published var isFinished: Bool
 
     init(name: String, date: Date? = nil, category: String, showingHour: Bool, subtasks: [Subtask],

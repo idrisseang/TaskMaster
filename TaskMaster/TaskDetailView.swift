@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TaskDetailView: View {
-    let task: Task
+    @ObservedObject var task: Task
     @State private var isShowingSubtaskCreationScreen = false
 
     var body: some View {
