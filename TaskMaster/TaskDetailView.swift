@@ -20,6 +20,23 @@ struct TaskDetailView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
+        .toolbar {
+            Menu {
+                Button {
+                    //
+                } label: {
+                    Label("Renommer", systemImage: "pencil")
+                }
+                Button(role: .destructive) {
+                    //
+                } label: {
+                    Label("Supprimer", systemImage: "trash")
+                }
+            } label: {
+                Image(systemName: "slider.horizontal.3")
+                    .foregroundColor(.primary)
+            }
+        }
         .sheet(isPresented: $isShowingSubtaskCreationScreen, content: {
             SubtaskCreationView(task: task)
                 .presentationDetents([.height(200)])
