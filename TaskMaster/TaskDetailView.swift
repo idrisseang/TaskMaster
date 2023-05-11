@@ -15,13 +15,13 @@ struct TaskDetailView: View {
         VStack(alignment: .leading) {
             taskHeader
             subtasksSection
-            .toolbar {
-                toolbar()
-            }
-            .sheet(isPresented: $isShowingSubtaskCreationScreen, content: {
-                SubtaskCreationView(task: task)
-                    .presentationDetents([.height(200)])
-            })
+                .toolbar {
+                    toolbar()
+                }
+                .sheet(isPresented: $isShowingSubtaskCreationScreen, content: {
+                    SubtaskCreationView(task: task)
+                        .presentationDetents([.height(200)])
+                })
         }
         .padding(.top)
         .padding()
@@ -73,6 +73,15 @@ struct TaskDetailView: View {
                             .font(.system(size: 20))
                             .padding()
                     }
+                    if subtask.date != nil {
+                        HStack {
+                            Image(systemName: "calendar")
+                                .foregroundColor(Color("AccentBlue"))
+                            Text(formatDate(date: subtask.date!, isIncludingHour: false))
+                                .foregroundColor(.black)
+                        }
+                        .frame(width: 200, height: 10, alignment: .trailing)
+                    }
                     Divider()
                 }
             }
@@ -97,22 +106,22 @@ struct TaskDetailView: View {
     }
 
     @ViewBuilder private func toolbar() -> some View {
-            Menu {
-                Button {
-                    //
-                } label: {
-                    Label("Renommer", systemImage: "pencil")
-                }
-                Button(role: .destructive) {
-                    //
-                } label: {
-                    Label("Supprimer", systemImage: "trash")
-                }
+        Menu {
+            Button {
+                //
             } label: {
-                Image(systemName: "slider.horizontal.3")
-                    .foregroundColor(.primary)
+                Label("Renommer", systemImage: "pencil")
             }
+            Button(role: .destructive) {
+                //
+            } label: {
+                Label("Supprimer", systemImage: "trash")
+            }
+        } label: {
+            Image(systemName: "slider.horizontal.3")
+                .foregroundColor(.primary)
         }
+    }
 }
 
 struct TaskDetailView_Previews: PreviewProvider {

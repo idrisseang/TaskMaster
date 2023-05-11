@@ -92,7 +92,7 @@ struct SubtaskCreationView: View {
                 Spacer()
                 Button {
                     if !subtaskName.isEmpty {
-                        let newSubtask = Subtask(name: subtaskName)
+                        let newSubtask = Subtask(name: subtaskName, date: subtaskDate)
                         task.subtasks.append(newSubtask)
                         presentationMode.wrappedValue.dismiss()
                     }
