@@ -14,37 +14,20 @@ struct TaskDetailView: View {
     var body: some View {
         VStack(alignment: .leading) {
             taskHeader
-            VStack(alignment: .leading) {
-                subtasksList
-                addSubtaskButton
+            subtasksSection
+            .toolbar {
+                toolbar()
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .sheet(isPresented: $isShowingSubtaskCreationScreen, content: {
+                SubtaskCreationView(task: task)
+                    .presentationDetents([.height(200)])
+            })
         }
-        .toolbar {
-            Menu {
-                Button {
-                    //
-                } label: {
-                    Label("Renommer", systemImage: "pencil")
-                }
-                Button(role: .destructive) {
-                    //
-                } label: {
-                    Label("Supprimer", systemImage: "trash")
-                }
-            } label: {
-                Image(systemName: "slider.horizontal.3")
-                    .foregroundColor(.primary)
-            }
-        }
-        .sheet(isPresented: $isShowingSubtaskCreationScreen, content: {
-            SubtaskCreationView(task: task)
-                .presentationDetents([.height(200)])
-        })
         .padding(.top)
         .padding()
         .background(Color("lightBlue"))
     }
+
     @ViewBuilder private var taskHeader: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -69,7 +52,8 @@ struct TaskDetailView: View {
         .frame(maxWidth: .infinity, maxHeight: 150, alignment: .top)
     }
 
-    @ViewBuilder private var subtasksList: some View {
+    @ViewBuilder private var subtasksSection: some View {
+        VStack(alignment: .leading) {
             Text("Sous-tâches")
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor(.black)
@@ -92,6 +76,9 @@ struct TaskDetailView: View {
                     Divider()
                 }
             }
+            addSubtaskButton
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 
     @ViewBuilder private var addSubtaskButton: some View {
@@ -108,6 +95,24 @@ struct TaskDetailView: View {
         }
         .padding(.top)
     }
+
+    @ViewBuilder private func toolbar() -> some View {
+            Menu {
+                Button {
+                    //
+                } label: {
+                    Label("Renommer", systemImage: "pencil")
+                }
+                Button(role: .destructive) {
+                    //
+                } label: {
+                    Label("Supprimer", systemImage: "trash")
+                }
+            } label: {
+                Image(systemName: "slider.horizontal.3")
+                    .foregroundColor(.primary)
+            }
+        }
 }
 
 struct TaskDetailView_Previews: PreviewProvider {

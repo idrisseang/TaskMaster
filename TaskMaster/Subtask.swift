@@ -7,14 +7,13 @@
 
 import Foundation
 
-
 class Subtask: TaskProtocol {
     var id = UUID()
     var name: String
     var date: Date?
     var showingHour: Bool
     @Published var isFinished: Bool
-    
+
     init(name: String, date: Date? = nil, showingHour: Bool = false, isFinished: Bool = false) {
         self.name = name
         self.date = date
@@ -28,7 +27,7 @@ class Subtask: TaskProtocol {
             case showingHour
             case isFinished
         }
-        
+
         required init (from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.id = try container.decode(UUID.self, forKey: .id)
@@ -37,7 +36,7 @@ class Subtask: TaskProtocol {
             self.showingHour = try container.decode(Bool.self, forKey: .showingHour)
             self.isFinished = try container.decode(Bool.self, forKey: .isFinished)
         }
-        
+
         func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try container.encode(id, forKey: .id)
