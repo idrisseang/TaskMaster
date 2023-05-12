@@ -10,7 +10,7 @@ import SwiftUI
 struct TaskDetailView: View {
     @ObservedObject var task: Task
     @State private var isShowingSubtaskCreationScreen = false
-
+    @EnvironmentObject var tasksList: TaskList
     var body: some View {
         VStack(alignment: .leading) {
             taskHeader
@@ -51,7 +51,35 @@ struct TaskDetailView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: 150, alignment: .top)
     }
+    struct CheckButton: View {
 
+        @ObservedObject var subtask: Subtask
+
+        var body: some View {
+            HStack {
+                Button {
+                    withAnimation {
+                        subtask.isFinished.toggle()
+                    }
+                } label: {
+                    Image(systemName: subtask.isFinished ? "circle.circle.fill" : "circle.circle")
+                        .foregroundColor(Color("AccentBlue"))
+                        .font(.system(size: 24))
+                }
+                if subtask.isFinished {
+                    Text(subtask.name)
+                        .font(.system(size: 24, weight: .light))
+                        .foregroundColor(Color(white: 0.4))
+                        .strikethrough(true, pattern: .solid, color: .black)
+                } else {
+                    Text(subtask.name)
+                        .foregroundColor(.black)
+                        .font(.system(size: 20, weight: .bold))
+                        .padding()
+                }
+            }
+        }
+    }
     @ViewBuilder private var subtasksSection: some View {
         VStack(alignment: .leading) {
             Text("Sous-tâches")
@@ -61,17 +89,7 @@ struct TaskDetailView: View {
             if !task.subtasks.isEmpty {
                 ForEach(task.subtasks) {subtask in
                     HStack {
-                        Button {
-                            //
-                        } label: {
-                            Image(systemName: "circle.circle")
-                                .foregroundColor(Color("AccentBlue"))
-                                .font(.system(size: 24))
-                        }
-                        Text(subtask.name)
-                            .foregroundColor(.black)
-                            .font(.system(size: 20))
-                            .padding()
+                        CheckButton(subtask: subtask)
                     }
                     if subtask.date != nil {
                         HStack {

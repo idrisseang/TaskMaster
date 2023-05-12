@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Subtask: TaskProtocol {
+class Subtask: TaskProtocol, ObservableObject {
     var id = UUID()
     var name: String
     var date: Date?
