@@ -20,6 +20,9 @@
 		2C42B41A29E68DF600045053 /* DateChoosen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C42B41929E68DF600045053 /* DateChoosen.swift */; };
 		2C42B41E29E6FAE700045053 /* DatePickerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C42B41D29E6FAE700045053 /* DatePickerScreen.swift */; };
 		2C51C03729E2B66100781DC2 /* TaskCreationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C03629E2B66100781DC2 /* TaskCreationScreen.swift */; };
+		2C62196A2A0E3B2500CDF263 /* priorityColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6219692A0E3B2500CDF263 /* priorityColor.swift */; };
+		2C7F0CA52A0E2110004A8516 /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7F0CA42A0E2110004A8516 /* Priority.swift */; };
+		2C7F0CA72A0E2740004A8516 /* PrioritySelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7F0CA62A0E2740004A8516 /* PrioritySelector.swift */; };
 		2C8AE9512A0A39D20000C060 /* TaskDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8AE9502A0A39D20000C060 /* TaskDetailView.swift */; };
 		2C8AE9532A0A6C140000C060 /* SubtaskCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8AE9522A0A6C140000C060 /* SubtaskCreationView.swift */; };
 		2C9383A329E2D8F1002081FC /* AccentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9383A229E2D8F1002081FC /* AccentButton.swift */; };
@@ -45,6 +48,9 @@
 		2C42B41929E68DF600045053 /* DateChoosen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateChoosen.swift; sourceTree = "<group>"; };
 		2C42B41D29E6FAE700045053 /* DatePickerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerScreen.swift; sourceTree = "<group>"; };
 		2C51C03629E2B66100781DC2 /* TaskCreationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreationScreen.swift; sourceTree = "<group>"; };
+		2C6219692A0E3B2500CDF263 /* priorityColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = priorityColor.swift; sourceTree = "<group>"; };
+		2C7F0CA42A0E2110004A8516 /* Priority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Priority.swift; sourceTree = "<group>"; };
+		2C7F0CA62A0E2740004A8516 /* PrioritySelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrioritySelector.swift; sourceTree = "<group>"; };
 		2C8AE9502A0A39D20000C060 /* TaskDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailView.swift; sourceTree = "<group>"; };
 		2C8AE9522A0A6C140000C060 /* SubtaskCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtaskCreationView.swift; sourceTree = "<group>"; };
 		2C9383A229E2D8F1002081FC /* AccentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentButton.swift; sourceTree = "<group>"; };
@@ -70,6 +76,8 @@
 			isa = PBXGroup;
 			children = (
 				2C51C03629E2B66100781DC2 /* TaskCreationScreen.swift */,
+				2C7F0CA62A0E2740004A8516 /* PrioritySelector.swift */,
+				2C6219692A0E3B2500CDF263 /* priorityColor.swift */,
 				2C42B41929E68DF600045053 /* DateChoosen.swift */,
 				2C9383A829E59003002081FC /* DatePickerButton.swift */,
 				2C42B41D29E6FAE700045053 /* DatePickerScreen.swift */,
@@ -103,6 +111,7 @@
 				2CC2C3F329FA79340026FA82 /* formatDate.swift */,
 				2C36612729E215C000540EF3 /* HomeView.swift */,
 				2C8AE9502A0A39D20000C060 /* TaskDetailView.swift */,
+				2C7F0CA42A0E2110004A8516 /* Priority.swift */,
 				2C8AE9522A0A6C140000C060 /* SubtaskCreationView.swift */,
 				2C36612929E2167900540EF3 /* CategorySelector.swift */,
 				2C36611529E2032800540EF3 /* Assets.xcassets */,
@@ -221,15 +230,18 @@
 				2CAE09C92A0DE9E500E76085 /* TaskProtocol.swift in Sources */,
 				2C51C03729E2B66100781DC2 /* TaskCreationScreen.swift in Sources */,
 				2C9383A929E59003002081FC /* DatePickerButton.swift in Sources */,
+				2C7F0CA52A0E2110004A8516 /* Priority.swift in Sources */,
 				2CC2C3F429FA79340026FA82 /* formatDate.swift in Sources */,
 				2C42B41E29E6FAE700045053 /* DatePickerScreen.swift in Sources */,
 				2C9383A529E2E3B5002081FC /* TaskList.swift in Sources */,
+				2C62196A2A0E3B2500CDF263 /* priorityColor.swift in Sources */,
 				2CD98A982A0A376C0073B04F /* Subtask.swift in Sources */,
 				2C42B41A29E68DF600045053 /* DateChoosen.swift in Sources */,
 				2C36612A29E2167900540EF3 /* CategorySelector.swift in Sources */,
 				2C36612429E2044A00540EF3 /* previewData.swift in Sources */,
 				2C36612829E215C000540EF3 /* HomeView.swift in Sources */,
 				2C36611429E2032800540EF3 /* ContentView.swift in Sources */,
+				2C7F0CA72A0E2740004A8516 /* PrioritySelector.swift in Sources */,
 				2C9383A329E2D8F1002081FC /* AccentButton.swift in Sources */,
 				2C36612029E2034F00540EF3 /* Task.swift in Sources */,
 				2C36611229E2032800540EF3 /* TrackMasterApp.swift in Sources */,

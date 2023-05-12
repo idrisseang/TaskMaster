@@ -29,24 +29,24 @@ struct TaskCell: View {
                 }
                 Spacer()
                 VStack(alignment: .leading, spacing: 12) {
-                    if !task.isFinished {
-                        if isEditingMode {
-                            TextField("", text: $task.name)
-                                .focused($focusedField, equals: .taskName)
-                                .font(.headline)
-                                .foregroundColor(.black)
-                                .submitLabel(.done)
+                        if !task.isFinished {
+                            if isEditingMode {
+                                TextField("", text: $task.name)
+                                    .focused($focusedField, equals: .taskName)
+                                    .font(.headline)
+                                    .foregroundColor(.black)
+                                    .submitLabel(.done)
+                            } else {
+                                Text(task.name)
+                                    .font(.headline)
+                                    .foregroundColor(.black)
+                            }
                         } else {
                             Text(task.name)
-                                .font(.headline)
-                                .foregroundColor(.black)
+                                .font(.system(size: 18, weight: .light))
+                                .foregroundColor(Color(white: 0.4))
+                                .strikethrough(true, pattern: .solid, color: .black)
                         }
-                    } else {
-                        Text(task.name)
-                            .font(.system(size: 18, weight: .light))
-                            .foregroundColor(Color(white: 0.4))
-                            .strikethrough(true, pattern: .solid, color: .black)
-                    }
                     if task.date != nil {
                         Text("\(formatDate(date: (hide ? date : task.date)!, isIncludingHour: task.showingHour))")
                             .font(.system(size: 16, weight: .light))
@@ -59,6 +59,13 @@ struct TaskCell: View {
                         Text("\(task.subtasks.count)")
                             .font(.callout)
                             .foregroundColor(Color(white: 0.4))
+                        Spacer()
+                        Text("priorité")
+                            .foregroundColor(Color(white: 0.4))
+                        Image(systemName:
+                                task.priority?.rawValue == "Faible" ? "flag" : "flag.fill"
+                        )
+                            .foregroundColor(priorityColor(for: task.priority!.rawValue))
                     }
                 }
                 .padding()
@@ -106,7 +113,7 @@ struct TaskCell: View {
             }
         }
         .padding()
-        .padding(.horizontal, 12)
+        .padding(.horizontal, 1)
         .background(.white)
         .cornerRadius(32)
         .sheet(isPresented: $isShowingDatePickerScreen) {
@@ -121,7 +128,7 @@ struct TaskCell: View {
 
 struct TaskCell_Previews: PreviewProvider {
     static var previews: some View {
-        TaskCell(task: previewTasks[0], onDelete: {})
+        TaskCell(task: previewTasks[4], onDelete: {})
             .padding(24)
             .background(Color("lightBlue"))
             .previewLayout(.sizeThatFits)

@@ -18,20 +18,30 @@ struct TaskCreationScreen: View {
     @State private var isInSelectionMode: Bool = true
     @State private var hide: Bool = false
     @State private var isShowingAlert = false
+    @State private var selectedPriority: String = ""
     @Binding  var isShowingHour: Bool
     @State private var isShowingDatePickerScreen: Bool = false
     var onTaskCreated: (Task) -> Void
 
     var body: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 16) {
             VStack(spacing: 16) {
                 Text(taskName == "" ? "Nouvelle Tâche" : taskName)
                     .font(.system(size: 32, weight: .bold))
                     .padding(.top, 32)
                     .foregroundColor(Color.black)
                 Text("Catégorie : \(selectedCategory)")
-                    .font(.system(size: 20, weight: .light))
+                    .font(.headline)
                     .foregroundColor(Color(white: 0.4))
+                HStack {
+                    Text("priorité : ")
+                        .foregroundColor(Color(white: 0.4))
+                        .font(.headline)
+                    if !selectedPriority.isEmpty {
+                        Image(systemName: selectedPriority == "Faible" ? "flag" : "flag.fill")
+                            .foregroundColor(priorityColor(for: selectedPriority))
+                    }
+                }
             }
             Spacer()
             VStack(alignment: .leading) {
@@ -119,6 +129,14 @@ struct TaskCreationScreen: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 Spacer()
+                VStack(alignment: .leading) {
+                    Text("Priorité")
+                        .font(.title2)
+                        .bold()
+                        .foregroundColor(Color.black)
+                    PrioritySelector(selectedPriority: $selectedPriority)
+                }
+                Spacer()
                 AccentButton(name: "Ajouter", color: .black, action: {
                     if selectedCategory.isEmpty {
                         isShowingAlert = true
@@ -128,7 +146,9 @@ struct TaskCreationScreen: View {
                             name: taskName,
                             date: taskDate,
                             category: selectedCategory.isEmpty ? "all" : selectedCategory,
-                            showingHour: isShowingHour, subtasks: [])
+                            showingHour: isShowingHour,
+                            subtasks: [],
+                            priority: Priority(rawValue: selectedPriority))
                         onTaskCreated(newTask)
                         presentationMode.wrappedValue.dismiss()
                     }
