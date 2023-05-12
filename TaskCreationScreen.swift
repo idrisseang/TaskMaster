@@ -148,7 +148,8 @@ struct TaskCreationScreen: View {
                             category: selectedCategory.isEmpty ? "all" : selectedCategory,
                             showingHour: isShowingHour,
                             subtasks: [],
-                            priority: Priority(rawValue: selectedPriority))
+                            priority: selectedPriority.isEmpty ?
+                            Priority(rawValue: "Faible") : Priority(rawValue: selectedPriority))
                         onTaskCreated(newTask)
                         presentationMode.wrappedValue.dismiss()
                     }
