@@ -43,7 +43,7 @@ struct TaskDetailView: View {
                 Image(systemName: "calendar")
                     .font(.system(size: 20))
                     .foregroundColor(Color("AccentBlue"))
-                Text(formatDate(date: task.date ?? Date(), isIncludingHour: false))
+                Text(formatDate(date: task.date ?? Date(), isIncludingHour: task.showingHour))
                     .font(.system(size: 18))
                     .foregroundColor(.black)
             }
@@ -77,10 +77,10 @@ struct TaskDetailView: View {
                         HStack {
                             Image(systemName: "calendar")
                                 .foregroundColor(Color("AccentBlue"))
-                            Text(formatDate(date: subtask.date!, isIncludingHour: false))
+                            Text(formatDate(date: subtask.date!, isIncludingHour: subtask.showingHour))
                                 .foregroundColor(.black)
                         }
-                        .frame(width: 200, height: 10, alignment: .trailing)
+                        .frame(width: 250, height: 10, alignment: .trailing)
                     }
                     Divider()
                 }
