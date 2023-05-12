@@ -9,7 +9,6 @@ import SwiftUI
 
 struct TaskCell: View {
     @ObservedObject var task: Task
-    @State private var isFinishedTask = false
     @State private var isDetailedMode = false
     @State private var date: Date?
     @State private var isEditingMode = false
@@ -22,15 +21,15 @@ struct TaskCell: View {
         VStack {
             HStack {
                 Button {
-                    isFinishedTask.toggle()
+                    task.isFinished.toggle()
                 } label: {
-                    Image(systemName: isFinishedTask ? "circle.circle.fill" : "circle.circle")
+                    Image(systemName: task.isFinished ? "circle.circle.fill" : "circle.circle")
                         .font(.system(size: 24, weight: .light))
-                        .foregroundColor(isFinishedTask ? Color("lightBlue") : Color(white: 0.4))
+                        .foregroundColor(task.isFinished ? Color("lightBlue") : Color(white: 0.4))
                 }
                 Spacer()
                 VStack(alignment: .leading, spacing: 12) {
-                    if !isFinishedTask {
+                    if !task.isFinished {
                         if isEditingMode {
                             TextField("", text: $task.name)
                                 .focused($focusedField, equals: .taskName)
@@ -53,6 +52,14 @@ struct TaskCell: View {
                             .font(.system(size: 16, weight: .light))
                             .foregroundColor(Color(white: 0.4))
                     }
+                    HStack {
+                        Image(systemName: "list.bullet.indent")
+                            .font(.callout)
+                            .foregroundColor(Color(white: 0.4))
+                        Text("\(task.subtasks.count)")
+                            .font(.callout)
+                            .foregroundColor(Color(white: 0.4))
+                    }
                 }
                 .padding()
                 Spacer()
@@ -69,7 +76,7 @@ struct TaskCell: View {
                         }
                     }
             }
-            if isDetailedMode && isFinishedTask {
+            if isDetailedMode && task.isFinished {
                 HStack {
                     Button {
                         onDelete()
@@ -79,7 +86,7 @@ struct TaskCell: View {
                     }
                 }
             }
-            if isDetailedMode && !isFinishedTask {
+            if isDetailedMode && !task.isFinished {
                 HStack {
                     Button {
                         isEditingMode = true
@@ -102,11 +109,6 @@ struct TaskCell: View {
         .padding(.horizontal, 12)
         .background(.white)
         .cornerRadius(32)
-        .onTapGesture {
-            withAnimation {
-                isDetailedMode.toggle()
-            }
-        }
         .sheet(isPresented: $isShowingDatePickerScreen) {
             DatePickerScreen(date: $date, isShowingHour: $task.showingHour, hide: $hide)
         }

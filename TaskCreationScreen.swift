@@ -127,7 +127,8 @@ struct TaskCreationScreen: View {
                         let newTask = Task(
                             name: taskName,
                             date: taskDate,
-                            category: selectedCategory.isEmpty ? "all" : selectedCategory, showingHour: isShowingHour)
+                            category: selectedCategory.isEmpty ? "all" : selectedCategory,
+                            showingHour: isShowingHour, subtasks: [])
                         onTaskCreated(newTask)
                         presentationMode.wrappedValue.dismiss()
                     }

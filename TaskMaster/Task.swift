@@ -7,18 +7,23 @@
 
 import Foundation
 
-class Task: Identifiable, Codable, ObservableObject {
-    var id = UUID()
+class Task: TaskProtocol, ObservableObject {
+    var id: UUID = UUID()
     var name: String
     var date: Date?
-    let category: String
+    var category: String
     var showingHour: Bool
+    @Published var subtasks: [Subtask]
+    @Published var isFinished: Bool
 
-    init(name: String, date: Date?, category: String, showingHour: Bool) {
+    init(name: String, date: Date? = nil, category: String, showingHour: Bool, subtasks: [Subtask],
+         isFinished: Bool = false) {
         self.name = name
         self.date = date
         self.category = category
         self.showingHour = showingHour
+        self.subtasks = subtasks
+        self.isFinished = isFinished
     }
 
     enum CodingKeys: CodingKey {
@@ -27,6 +32,8 @@ class Task: Identifiable, Codable, ObservableObject {
         case date
         case category
         case showingHour
+        case subtasks
+        case isFinished
     }
 
     required init (from decoder: Decoder) throws {
@@ -36,6 +43,8 @@ class Task: Identifiable, Codable, ObservableObject {
         self.date = try container.decode(Date.self, forKey: .date)
         self.category = try container.decode(String.self, forKey: .category)
         self.showingHour = try container.decode(Bool.self, forKey: .showingHour)
+        self.subtasks = try container.decode([Subtask].self, forKey: .subtasks)
+        self.isFinished = try container.decode(Bool.self, forKey: .isFinished)
     }
 
     func encode(to encoder: Encoder) throws {
@@ -45,5 +54,7 @@ class Task: Identifiable, Codable, ObservableObject {
         try container.encode(date, forKey: .date)
         try container.encode(category, forKey: .category)
         try container.encode(showingHour, forKey: .showingHour)
+        try container.encode(subtasks, forKey: .subtasks)
+        try container.encode(isFinished, forKey: .isFinished)
     }
 }
