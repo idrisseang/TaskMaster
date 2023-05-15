@@ -13,6 +13,8 @@ struct TaskDetailView: View {
     @EnvironmentObject var tasksList: TaskList
     @FocusState private var focusedField: Field?
     @State private var isEditingMode = false
+    @State private var isShowingDatePickerScreen = false
+    @State private var hide = false
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -25,6 +27,9 @@ struct TaskDetailView: View {
                     SubtaskCreationView(task: task)
                         .presentationDetents([.height(200)])
                 })
+                .sheet(isPresented: $isShowingDatePickerScreen) {
+                    DatePickerScreen(date: $task.date, isShowingHour: $task.showingHour, hide: $hide)
+                }
         }
         .padding(.top)
         .padding()
@@ -58,12 +63,19 @@ struct TaskDetailView: View {
             }
             Divider()
             HStack {
+                if task.date != nil {
                 Image(systemName: "calendar")
                     .font(.system(size: 20))
                     .foregroundColor(Color("AccentBlue"))
-                Text(formatDate(date: task.date ?? Date(), isIncludingHour: task.showingHour))
-                    .font(.system(size: 18))
-                    .foregroundColor(.black)
+                    Text(formatDate(date: task.date!, isIncludingHour: task.showingHour))
+                        .font(.system(size: 18))
+                        .foregroundColor(.black)
+                        .onTapGesture {
+                                isShowingDatePickerScreen = true
+                        }
+                } else {
+                    addButton(text: "Ajouter une date", isShowingVar: $isShowingDatePickerScreen)
+                }
             }
             Divider()
         }
@@ -121,19 +133,19 @@ struct TaskDetailView: View {
                     Divider()
                 }
             }
-            addSubtaskButton
+            addButton(text: "Ajouter une sous-tâche", isShowingVar: $isShowingSubtaskCreationScreen)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 
-    @ViewBuilder private var addSubtaskButton: some View {
+    @ViewBuilder private func addButton(text: String, isShowingVar: Binding<Bool>) -> some View {
         HStack {
             Button {
-                isShowingSubtaskCreationScreen = true
+                isShowingVar.wrappedValue = true
             } label: {
                 Image(systemName: "plus")
                     .font(.system(size: 20, weight: .semibold))
-                Text("Ajouter une sous-tâche")
+                Text(text)
                     .font(.system(size: 20, weight: .semibold))
             }
             .foregroundColor(Color("AccentBlue"))
@@ -161,6 +173,7 @@ struct TaskDetailView: View {
                 .foregroundColor(.black)
         }
     }
+
     private enum Field: Int, Hashable {
         case taskName
     }

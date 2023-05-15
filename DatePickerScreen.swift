@@ -16,98 +16,25 @@ struct DatePickerScreen: View {
 
     var body: some View {
         VStack {
-            HStack {
-                Text("Echéance")
-                Spacer()
-                if !isShowingHour {
-                    Text("\(formatDate(date: date ?? Date(), isIncludingHour: false))")
-                } else {
-                    Text("\(formatDate(date: date ?? Date(), isIncludingHour: true))")
-                }
-            }
-            .padding()
-            .padding(.top)
-            .font(.footnote)
-            .bold()
-            .foregroundColor(Color(white: 0.4))
+            header
             Spacer()
             VStack(alignment: .leading) {
-                HStack {
-                    Image(systemName: "calendar")
-                        .foregroundColor(Color("AccentBlue"))
-                    Text("Date")
-                        .foregroundColor(.black)
-                }
-                .padding(.horizontal)
-                Divider()
-                    .foregroundColor(Color(white: 0.4))
-                    .padding(.horizontal)
-                if let unwrappedDate = date {
-                    DatePicker(
-                        "",
-                        selection: Binding<Date>(get: { unwrappedDate }, set: { date = $0 }),
-                        displayedComponents: .date )
-                    .environment(\.locale, Locale(identifier: "fr_FR"))
+                CustomLabel(title: "Date", icon: "calendar")
+                separator
+                datePickerSection(displayedComponent: .date)
                     .datePickerStyle(GraphicalDatePickerStyle())
-                    .accentColor(.black)
-                    .colorScheme(.dark)
-                    .colorInvert()
-                    .colorMultiply(Color("AccentBlue"))
-                } else {
-                    DatePicker(
-                        "",
-                        selection: Binding<Date>(get: { Date() }, set: { date = $0 }),
-                        displayedComponents: .date )
-                    .environment(\.locale, Locale(identifier: "fr_FR"))
-                    .datePickerStyle(GraphicalDatePickerStyle())
-                    .accentColor(.black)
-                    .colorScheme(.dark)
-                    .colorInvert()
-                    .colorMultiply(Color("AccentBlue"))
-                }
-                Divider()
-                    .foregroundColor(Color(white: 0.4))
-                    .padding(.horizontal)
+                separator
                 HStack {
-                    Image(systemName: "clock")
-                        .foregroundColor(Color("AccentBlue"))
-                    Text("Heure")
-                        .foregroundColor(.black)
+                    CustomLabel(title: "Heure", icon: "clock")
                     Toggle("", isOn: $isShowingHour)
                         .toggleStyle(SwitchToggleStyle(tint: Color("AccentBlue")))
                 }
                 .padding(.horizontal)
                 if isShowingHour {
-                    Divider()
-                        .foregroundColor(Color(white: 0.4))
-                        .padding(.horizontal)
-                    VStack(alignment: .center) {
-                        if let unwrappedDate = date {
-                            DatePicker(
-                                "",
-                                selection: Binding<Date>(get: { unwrappedDate }, set: { date = $0 }),
-                                displayedComponents: .hourAndMinute )
-                            .datePickerStyle(.wheel)
-                            .environment(\.locale, Locale(identifier: "fr_FR"))
-                            .frame(width: 375, height: 190)
-                            .accentColor(.black)
-                            .colorScheme(.dark)
-                            .colorInvert()
-                            .colorMultiply(Color("AccentBlue"))
-                        } else {
-                            DatePicker(
-                                "",
-                                selection: Binding<Date>(get: { Date() }, set: { date = $0 }),
-                                displayedComponents: .hourAndMinute )
-                            .datePickerStyle(.wheel)
-                            .environment(\.locale, Locale(identifier: "fr_FR"))
-                            .frame(width: 375, height: 190)
-                            .accentColor(.black)
-                            .colorScheme(.dark)
-                            .colorInvert()
-                            .colorMultiply(Color("AccentBlue"))
-                        }
-                    }
+                    separator
+                    datePickerSection(displayedComponent: .hourAndMinute)
+                        .datePickerStyle(.wheel)
+                        .frame(width: 375, height: 190)
                 }
                 Spacer()
                 AccentButton(name: "Valider", color: .black, action: {
@@ -118,6 +45,56 @@ struct DatePickerScreen: View {
         }
         .padding(.top)
         .background(Color("lightBlue"))
+    }
+
+    @ViewBuilder private var header: some View {
+        HStack {
+            Text("Echéance")
+            Spacer()
+            if !isShowingHour {
+                Text("\(formatDate(date: date ?? Date(), isIncludingHour: false))")
+            } else {
+                Text("\(formatDate(date: date ?? Date(), isIncludingHour: true))")
+            }
+        }
+        .padding()
+        .padding(.top)
+        .font(.footnote)
+        .bold()
+        .foregroundColor(Color(white: 0.4))
+    }
+
+    @ViewBuilder private var separator: some View {
+        Divider()
+            .foregroundColor(Color(white: 0.4))
+            .padding(.horizontal)
+    }
+
+    @ViewBuilder private func datePickerSection(displayedComponent: DatePickerComponents) -> some View {
+        DatePicker(
+            "",
+            selection: Binding<Date>(get: { date != nil ? date! : Date() }, set: { date = $0 }),
+            displayedComponents: displayedComponent)
+        .environment(\.locale, Locale(identifier: "fr_FR"))
+        .accentColor(.black)
+        .colorScheme(.dark)
+        .colorInvert()
+        .colorMultiply(Color("AccentBlue"))
+    }
+}
+
+struct CustomLabel: View {
+    let title: String
+    let icon: String
+
+    var body: some View {
+        HStack {
+            Image(systemName: icon)
+                .foregroundColor(Color("AccentBlue"))
+            Text(title)
+                .foregroundColor(.black)
+        }
+        .padding(.horizontal)
     }
 }
 

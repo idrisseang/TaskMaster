@@ -25,135 +25,18 @@ struct TaskCreationScreen: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            VStack(spacing: 16) {
-                Text(taskName == "" ? "Nouvelle Tâche" : taskName)
-                    .font(.system(size: 32, weight: .bold))
-                    .padding(.top, 32)
-                    .foregroundColor(Color.black)
-                Text("Catégorie : \(selectedCategory)")
-                    .font(.headline)
-                    .foregroundColor(Color(white: 0.4))
-                HStack {
-                    Text("priorité : ")
-                        .foregroundColor(Color(white: 0.4))
-                        .font(.headline)
-                    if !selectedPriority.isEmpty {
-                        Image(systemName: selectedPriority == "Faible" ? "flag" : "flag.fill")
-                            .foregroundColor(priorityColor(for: selectedPriority))
-                    }
-                }
-            }
+            header
+            Spacer()
+            taskSection
+            Spacer()
+            categorySection
             Spacer()
             VStack(alignment: .leading) {
-                Text("Nom de la tâche")
-                    .font(.title2)
-                    .bold()
-                    .foregroundColor(Color.black)
-                TextField("", text: $taskName)
-                    .foregroundColor(.black)
-                    .submitLabel(.done)
-                    .padding(12)
-                    .padding(.horizontal, 12)
-                    .background(Color.white)
-                    .cornerRadius(.infinity)
-            }
-            Spacer()
-            VStack(alignment: .leading) {
-                Text("Categorie")
-                    .font(.title2)
-                    .bold()
-                    .foregroundColor(Color.black)
-                    .padding(-7)
-                CategorySelector(
-                    selectedCategories: $selectedCategories,
-                    selectedCategory: $selectedCategory,
-                    isTaskCreationScreen: .constant(true) )
-            }
-            Spacer()
-            VStack(alignment: .leading) {
-                Text("Date d'échéance")
-                    .font(.title2)
-                    .bold()
-                    .foregroundColor(Color.black)
-                HStack {
-                    if isInSelectionMode && !hide {
-                        DatePickerButton(
-                            title: "Aujourd'hui",
-                            timeVariation: .day,
-                            value: 0,
-                            iconName: "sun.max",
-                            currentDate: $taskDate, hide: $hide) {
-                                withAnimation {
-                                    hide = true
-                                    isShowingHour = false
-                                }
-                            }
-                        DatePickerButton(
-                            title: "Demain",
-                            timeVariation: .day,
-                            value: 1,
-                            iconName: "sunrise",
-                            currentDate: $taskDate, hide: $hide) {
-                                withAnimation {
-                                    hide = true
-                                    isShowingHour = false
-                                }
-                            }
-                        DatePickerButton(
-                            title: "Dans 1h",
-                            timeVariation: .hour,
-                            value: 1,
-                            iconName: "hourglass",
-                            currentDate: $taskDate, hide: $hide) {
-                                withAnimation {
-                                    hide = true
-                                    isShowingHour = true
-                                }
-                            }
-                        DatePickerButton(
-                            title: "Date et Heure",
-                            timeVariation: .day,
-                            value: 0,
-                            iconName: "calendar.badge.clock",
-                            currentDate: $taskDate, hide: $hide) {
-                                isShowingDatePickerScreen = true
-                            }
-                    } else {
-                        DateChoosen(date: taskDate ?? Date(), isShowingHour: $isShowingHour) {
-                            withAnimation {
-                                hide = false
-                            }
-                            taskDate = Date()
-                        }
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                dateSection
                 Spacer()
-                VStack(alignment: .leading) {
-                    Text("Priorité")
-                        .font(.title2)
-                        .bold()
-                        .foregroundColor(Color.black)
-                    PrioritySelector(selectedPriority: $selectedPriority)
-                }
+                prioritySection
                 Spacer()
-                AccentButton(name: "Ajouter", color: .black, action: {
-                    if selectedCategory.isEmpty {
-                        isShowingAlert = true
-                        selectedCategory = "all"
-                    } else {
-                        let newTask = Task(
-                            name: taskName,
-                            date: taskDate,
-                            category: selectedCategory.isEmpty ? "all" : selectedCategory,
-                            showingHour: isShowingHour,
-                            subtasks: [],
-                            priority: selectedPriority.isEmpty ?
-                            Priority(rawValue: "Faible") : Priority(rawValue: selectedPriority))
-                        onTaskCreated(newTask)
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                })
+                addTaskButton
             }
             .alert(isPresented: $isShowingAlert) {
                 Alert(
@@ -169,6 +52,100 @@ struct TaskCreationScreen: View {
         .sheet(isPresented: $isShowingDatePickerScreen) {
             DatePickerScreen(date: $taskDate, isShowingHour: $isShowingHour, hide: $hide)
         }
+    }
+
+    @ViewBuilder private var header: some View {
+        VStack(spacing: 16) {
+            Text(taskName == "" ? "Nouvelle Tâche" : taskName)
+                .font(.system(size: 32, weight: .bold))
+                .padding(.top, 32)
+                .foregroundColor(Color.black)
+            Text("Catégorie : \(selectedCategory)")
+                .font(.headline)
+                .foregroundColor(Color(white: 0.4))
+            HStack {
+                Text("priorité : ")
+                    .foregroundColor(Color(white: 0.4))
+                    .font(.headline)
+                if !selectedPriority.isEmpty {
+                    Image(systemName: selectedPriority == "Faible" ? "flag" : "flag.fill")
+                        .foregroundColor(priorityColor(for: selectedPriority))
+                }
+            }
+        }
+    }
+
+    @ViewBuilder private var taskSection: some View {
+        VStack(alignment: .leading) {
+            Text("Nom de la tâche")
+                .font(.title2)
+                .bold()
+                .foregroundColor(Color.black)
+            TextField("", text: $taskName)
+                .foregroundColor(.black)
+                .submitLabel(.done)
+                .padding(12)
+                .padding(.horizontal, 12)
+                .background(Color.white)
+                .cornerRadius(.infinity)
+        }
+    }
+
+    @ViewBuilder private var categorySection: some View {
+        VStack(alignment: .leading) {
+            Text("Categorie")
+                .font(.title2)
+                .bold()
+                .foregroundColor(Color.black)
+                .padding(-7)
+            CategorySelector(
+                selectedCategories: $selectedCategories,
+                selectedCategory: $selectedCategory,
+                isTaskCreationScreen: .constant(true) )
+        }
+    }
+
+    @ViewBuilder private var dateSection: some View {
+        Text("Date d'échéance")
+            .font(.title2)
+            .bold()
+            .foregroundColor(Color.black)
+        DateButtonsSection(isInSelectionMode: $isInSelectionMode,
+                    hide: $hide,
+                    date: $taskDate,
+                    isShowingHour: $isShowingHour,
+                    isShowingDatePickerScreen: $isShowingDatePickerScreen)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    @ViewBuilder private var prioritySection: some View {
+        VStack(alignment: .leading) {
+            Text("Priorité")
+                .font(.title2)
+                .bold()
+                .foregroundColor(Color.black)
+            PrioritySelector(selectedPriority: $selectedPriority)
+        }
+    }
+
+    @ViewBuilder private var addTaskButton: some View {
+        AccentButton(name: "Ajouter", color: .black, action: {
+            if selectedCategory.isEmpty {
+                isShowingAlert = true
+                selectedCategory = "all"
+            } else {
+                let newTask = Task(
+                    name: taskName,
+                    date: taskDate,
+                    category: selectedCategory.isEmpty ? "all" : selectedCategory,
+                    showingHour: isShowingHour,
+                    subtasks: [],
+                    priority: selectedPriority.isEmpty ?
+                    Priority(rawValue: "Faible") : Priority(rawValue: selectedPriority))
+                onTaskCreated(newTask)
+                presentationMode.wrappedValue.dismiss()
+            }
+        })
     }
 }
 

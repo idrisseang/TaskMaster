@@ -14,52 +14,60 @@ struct PrioritySelector: View {
 
     var body: some View {
         VStack {
-        if !hide {
+            if !hide {
                 ScrollView(.horizontal) {
-                    HStack(spacing: 12) {
-                        ForEach(Priority.allCases, id: \.self) { priority in
-                            Button {
-                                withAnimation {
-                                    hide = true
-                                }
-                                selectedPriority = priority.rawValue
-                            } label: {
-                                Text(priority.rawValue)
-                                    .font(.headline)
-                                    .foregroundColor(.white)
-                            }
-                            .buttonStyle(.borderedProminent)
-                            .tint(Color("AccentBlue"))
-                        }
-                    }
+                    priorityCases
                 }
                 .frame(maxWidth: .infinity)
             } else {
-                HStack {
-                    Image(systemName: selectedPriority == "Faible" ? "flag" : "flag.fill")
-                        .foregroundColor(priorityColor(for: selectedPriority))
-                    Text(selectedPriority)
-                    Text("|")
-                        .opacity(0.4)
-                        .fontWeight(.light)
-                    Button {
-                        withAnimation {
-                            hide = false
-                            selectedPriority = ""
-                        }
-                    } label: {
-                        Image(systemName: "multiply")
-                    }
-                }
-                .font(.headline)
-                .foregroundColor(.black)
-                .padding()
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(nuanceGris, lineWidth: 1)
-                )
+                showSelectedPriority
             }
         }
+    }
+
+    @ViewBuilder private var priorityCases: some View {
+        HStack(spacing: 12) {
+            ForEach(Priority.allCases, id: \.self) { priority in
+                Button {
+                    withAnimation {
+                        hide = true
+                    }
+                    selectedPriority = priority.rawValue
+                } label: {
+                    Text(priority.rawValue)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(Color("AccentBlue"))
+            }
+        }
+    }
+
+    @ViewBuilder private var showSelectedPriority: some View {
+        HStack {
+            Image(systemName: selectedPriority == "Faible" ? "flag" : "flag.fill")
+                .foregroundColor(priorityColor(for: selectedPriority))
+            Text(selectedPriority)
+            Text("|")
+                .opacity(0.4)
+                .fontWeight(.light)
+            Button {
+                withAnimation {
+                    hide = false
+                    selectedPriority = ""
+                }
+            } label: {
+                Image(systemName: "multiply")
+            }
+        }
+        .font(.headline)
+        .foregroundColor(.black)
+        .padding()
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(nuanceGris, lineWidth: 1)
+        )
     }
 }
 

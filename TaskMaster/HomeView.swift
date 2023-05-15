@@ -13,7 +13,6 @@ struct HomeView: View {
     @State private var isShowingNewTaskScreen = false
     @State private var selectedCategories: [String] = ["all"]
     @State private var selectedCategory: String = "maison"
-    @State private var selectedTaskToDelete: Task?
     @State private var isShowingHour: Bool = false
 
     var body: some View {
@@ -53,7 +52,7 @@ struct HomeView: View {
                                     .padding(.trailing)
                                 }
                         }
-                        Text("Vous avez actuellement \(Text("\(tasksList.tasks.count)") .foregroundColor(.black)) tâches ")
+                        Text("Vous avez actuellement \(tasksList.tasks.count) tâches")
                             .foregroundColor(Color(white: 0.4))
                         ForEach(tasksList.tasks) { task in
                             if selectedCategories.contains(task.category) || selectedCategories.contains("all") {
@@ -61,15 +60,7 @@ struct HomeView: View {
                                     TaskDetailView(task: task)
                                         .environmentObject(tasksList)
                                 } label: {
-                                    TaskCell(task: task) {
-                                        selectedTaskToDelete = task
-                                        withAnimation {
-                                            tasksList.tasks.removeAll { taskToDelete in
-                                                taskToDelete.id == selectedTaskToDelete!.id
-                                            }
-                                        }
-                                        selectedTaskToDelete = nil
-                                    }
+                                    TaskCell(task: task)
                                 }
                             }
                         }

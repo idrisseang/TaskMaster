@@ -10,7 +10,7 @@ import Foundation
 class Task: TaskProtocol, ObservableObject {
     var id: UUID = UUID()
     @Published var name: String
-    var date: Date?
+    @Published var date: Date?
     var category: String
     var showingHour: Bool
     @Published var subtasks: [Subtask]

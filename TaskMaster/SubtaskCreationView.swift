@@ -18,6 +18,7 @@ struct SubtaskCreationView: View {
     @Environment (\.presentationMode) var presentationMode
     let task: Task
     @FocusState private var focusedField: Field?
+
     var body: some View {
         VStack(alignment: .leading) {
             TextField("Nom de la tâche", text: $subtaskName)
@@ -25,83 +26,17 @@ struct SubtaskCreationView: View {
                 .padding()
                 .focused($focusedField, equals: .subtaskName)
                 .padding(.bottom)
-            HStack {
-                if isInSelectionMode && !hide {
-                    DatePickerButton(
-                        title: "Aujourd'hui",
-                        timeVariation: .day,
-                        value: 0,
-                        iconName: "sun.max",
-                        currentDate: $subtaskDate, hide: $hide) {
-                            withAnimation {
-                                hide = true
-                                isShowingHour = false
-                            }
-                        }
-                    DatePickerButton(
-                        title: "Demain",
-                        timeVariation: .day,
-                        value: 1,
-                        iconName: "sunrise",
-                        currentDate: $subtaskDate, hide: $hide) {
-                            withAnimation {
-                                hide = true
-                                isShowingHour = false
-                            }
-                        }
-                    DatePickerButton(
-                        title: "Dans 1h",
-                        timeVariation: .hour,
-                        value: 1,
-                        iconName: "hourglass",
-                        currentDate: $subtaskDate, hide: $hide) {
-                            withAnimation {
-                                hide = true
-                                isShowingHour = true
-                            }
-                        }
-                    DatePickerButton(
-                        title: "Date et Heure",
-                        timeVariation: .day,
-                        value: 0,
-                        iconName: "calendar.badge.clock",
-                        currentDate: $subtaskDate, hide: $hide) {
-                            isShowingDatePickerScreen = true
-                        }
-                } else {
-                    DateChoosen(date: subtaskDate ?? Date(), isShowingHour: $isShowingHour) {
-                        withAnimation {
-                            hide = false
-                        }
-                        subtaskDate = Date()
-                    }
-                }
-            }
+            DateButtonsSection(isInSelectionMode: $isInSelectionMode,
+                        hide: $hide,
+                        date: $subtaskDate,
+                        isShowingHour: $isShowingHour,
+                        isShowingDatePickerScreen: $isShowingDatePickerScreen)
             .padding(.leading)
             Divider()
             HStack {
-                Circle()
-                    .frame(width: 50, height: 50)
-                    .foregroundColor(Color("AccentBlue"))
-                    .opacity(0.8)
-                    .overlay {
-                        Image(task.category)
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                    }
+                TaskCategory(task: task, frame: 55, color: Color("AccentBlue"))
                 Spacer()
-                Button {
-                    if !subtaskName.isEmpty {
-                        let newSubtask = Subtask(name: subtaskName, date: subtaskDate, showingHour: isShowingHour)
-                        task.subtasks.append(newSubtask)
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                } label: {
-                    Image(systemName: "arrow.up.circle.fill")
-                        .foregroundColor(Color("AccentBlue"))
-                        .font(.system(size: 40))
-                        .opacity(subtaskName.isEmpty ? 0.5 : 1)
-                }
+                addSubtaskButton
             }
             .padding()
         }
@@ -116,6 +51,21 @@ struct SubtaskCreationView: View {
     }
     private enum Field: Int, Hashable {
         case subtaskName
+    }
+
+    @ViewBuilder private var addSubtaskButton: some View {
+        Button {
+            if !subtaskName.isEmpty {
+                let newSubtask = Subtask(name: subtaskName, date: subtaskDate, showingHour: isShowingHour)
+                task.subtasks.append(newSubtask)
+                presentationMode.wrappedValue.dismiss()
+            }
+        } label: {
+            Image(systemName: "arrow.up.circle.fill")
+                .foregroundColor(Color("AccentBlue"))
+                .font(.system(size: 40))
+                .opacity(subtaskName.isEmpty ? 0.5 : 1)
+        }
     }
 }
 struct SubtaskCreationView_Previews: PreviewProvider {
