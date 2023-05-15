@@ -11,6 +11,9 @@ struct TaskDetailView: View {
     @ObservedObject var task: Task
     @State private var isShowingSubtaskCreationScreen = false
     @EnvironmentObject var tasksList: TaskList
+    @FocusState private var focusedField: Field?
+    @State private var isEditingMode = false
+
     var body: some View {
         VStack(alignment: .leading) {
             taskHeader
@@ -34,9 +37,24 @@ struct TaskDetailView: View {
                 Image(systemName: "circle.circle")
                     .font(.system(size: 20))
                     .foregroundColor(Color("AccentBlue"))
-                Text(task.name)
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundColor(.black)
+                if !task.isFinished {
+                    if isEditingMode {
+                        TextField("", text: $task.name)
+                            .focused($focusedField, equals: .taskName)
+                            .font(.headline)
+                            .foregroundColor(.black)
+                            .submitLabel(.done)
+                    } else {
+                        Text(task.name)
+                            .font(.headline)
+                            .foregroundColor(.black)
+                    }
+                } else {
+                    Text(task.name)
+                        .font(.system(size: 18, weight: .light))
+                        .foregroundColor(Color(white: 0.4))
+                        .strikethrough(true, pattern: .solid, color: .black)
+                }
             }
             Divider()
             HStack {
@@ -51,7 +69,7 @@ struct TaskDetailView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: 150, alignment: .top)
     }
-    struct CheckButton: View {
+    struct SubtaskCell: View {
 
         @ObservedObject var subtask: Subtask
 
@@ -89,7 +107,7 @@ struct TaskDetailView: View {
             if !task.subtasks.isEmpty {
                 ForEach(task.subtasks) {subtask in
                     HStack {
-                        CheckButton(subtask: subtask)
+                        SubtaskCell(subtask: subtask)
                     }
                     if subtask.date != nil {
                         HStack {
@@ -126,19 +144,25 @@ struct TaskDetailView: View {
     @ViewBuilder private func toolbar() -> some View {
         Menu {
             Button {
-                //
+                isEditingMode = true
+                focusedField = .taskName
             } label: {
                 Label("Renommer", systemImage: "pencil")
             }
             Button(role: .destructive) {
-                //
+                tasksList.tasks.removeAll { element in
+                    element.id == task.id
+                }
             } label: {
                 Label("Supprimer", systemImage: "trash")
             }
         } label: {
             Image(systemName: "slider.horizontal.3")
-                .foregroundColor(.primary)
+                .foregroundColor(.black)
         }
+    }
+    private enum Field: Int, Hashable {
+        case taskName
     }
 }
 

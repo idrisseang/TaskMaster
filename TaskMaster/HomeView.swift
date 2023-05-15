@@ -59,6 +59,7 @@ struct HomeView: View {
                             if selectedCategories.contains(task.category) || selectedCategories.contains("all") {
                                 NavigationLink {
                                     TaskDetailView(task: task)
+                                        .environmentObject(tasksList)
                                 } label: {
                                     TaskCell(task: task) {
                                         selectedTaskToDelete = task
